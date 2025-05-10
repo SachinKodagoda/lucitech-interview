@@ -24,13 +24,11 @@ import {
   fetchProductById,
   updateProductAttributes,
   clearCurrentProduct,
-  fetchProductByCategoryId,
 } from "~/stores/slices/productSlice";
 import type { AttributeValue, Product } from "~/types";
 import { useAppDispatch, useAppSelector } from "~/hooks";
 
 const { Title, Text } = Typography;
-const { Option } = Select;
 
 const ProductDetail: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -51,12 +49,6 @@ const ProductDetail: React.FC = () => {
     if (productId) {
       dispatch(fetchProductById(parseInt(productId)));
     }
-    // if (categoryId) {
-    //   // eslint-disable-next-line no-console
-    //   console.log("categoryId: =-->", categoryId);
-    //   dispatch(fetchProductByCategoryId(parseInt(categoryId)));
-    // }
-
     // Cleanup when component unmounts
     return () => {
       dispatch(clearCurrentProduct());
@@ -87,7 +79,6 @@ const ProductDetail: React.FC = () => {
   const handleSave = async () => {
     try {
       const values = await form.validateFields();
-
       // Update attributes with form values
       const updatedAttributes = editableAttributes.map((attr) => ({
         ...attr,

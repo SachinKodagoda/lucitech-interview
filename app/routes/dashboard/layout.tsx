@@ -1,13 +1,5 @@
 import React, { useEffect, type ReactElement } from "react";
-import {
-  Layout,
-  Menu,
-  Button,
-  Typography,
-  Spin,
-  Badge,
-  type MenuProps,
-} from "antd";
+import { Layout, Menu, Button, Typography, Spin } from "antd";
 import {
   LogoutOutlined,
   AppstoreOutlined,
@@ -18,11 +10,17 @@ import { useAppDispatch, useAppSelector } from "~/hooks";
 import { logout } from "~/stores/slices/authSlice";
 import { fetchCategories } from "~/stores/slices/categorySlice";
 import LastModifiedProduct from "../lastModifiedProduct";
-import type { Category } from "~/types";
-import type { ItemType } from "antd/es/menu/interface";
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
+
+interface categoryList {
+  id: string;
+  label: ReactElement | string;
+  key: string;
+  children?: categoryList[];
+  onClick?: () => void;
+}
 
 const AppLayout: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -44,65 +42,35 @@ const AppLayout: React.FC = () => {
     navigate("/login");
   };
 
-  // Create a hierarchical menu from categories
-  const createCategoryMenuItems = (categories: any[]): MenuProps["items"] => {
-    return categories.map((category) => {
-      if (category.children && category.children.length > 0) {
-        return {
-          key: `category-${category.id}`,
-          icon: <AppstoreOutlined />,
-          label: category.name,
-          children: createCategoryMenuItems(category.children),
-        };
-      }
-      return {
-        key: `category-${category.id}`,
-        icon: <AppstoreOutlined />,
-        label: category.name,
-        onClick: () => navigate(`/dashboard?categoryId=${category.id}`),
-      };
-    });
-  };
-
-  // Organize categories into a hierarchical structure
-  const getCategoryTree = () => {
-    const rootCategories = categories.filter((cat) => !cat.parent_id);
-
-    const buildTree = (parentId: number): Category[] => {
-      return categories
-        .filter((cat) => cat.parent_id === parentId)
-        .map((cat) => ({
-          ...cat,
-          children: buildTree(cat.id),
-        }));
-    };
-
-    return rootCategories.map((cat) => ({
-      ...cat,
-      children: buildTree(cat.id),
-    }));
-  };
-
-  const categoryTree = categories.length > 0 ? getCategoryTree() : [];
-  //   const items = categories.reduce((acc, curr, index) => {
-  //   const existingGroup = acc.find((group) => group.id === `${curr.parent_id}`);
-  //   if (existingGroup) {
-  //     existingGroup.children?.push({
-  //       id: `${curr.id}`,
-  //       label: curr.name,
-  //       key: `${index}-${curr.id}`,
-  //     });
-  //   } else {
-  //     acc.push({
-  //       id: `${curr.id}`,
-  //       label: curr.name,
-  //       key: `${index}-${curr.id}`,
-  //       children: [],
-  //     });
-  //   }
-  //   return acc;
-  // }, [] as TreeNode[]);
-  const menuItems = createCategoryMenuItems(categoryTree);
+  const menuItems = categories.reduce((acc, curr, index) => {
+    const existingGroup = acc.find((group) => group.id === `${curr.parent_id}`);
+    if (existingGroup) {
+      existingGroup.children?.push({
+        id: `${curr.id}`,
+        label: curr.name,
+        key: `${index}-${curr.id}`,
+        onClick: () => navigate(`/dashboard?categoryId=${curr.id}`),
+      });
+    } else {
+      acc.push({
+        key: `${index}-${curr.id}`,
+        id: `${curr.id}`,
+        label: (
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/dashboard?category_group=${curr.id}`);
+            }}
+          >
+            {curr.name}
+          </div>
+        ),
+        // icon: <AppstoreOutlined />,
+        children: [],
+      });
+    }
+    return acc;
+  }, [] as categoryList[]);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -172,6 +140,12 @@ const AppLayout: React.FC = () => {
               style={{ borderRight: 0 }}
               defaultOpenKeys={["categories"]}
               items={[
+                {
+                  key: "all-products",
+                  icon: <ShoppingOutlined />,
+                  label: "All Products",
+                  onClick: () => navigate(`/dashboard`),
+                },
                 {
                   key: "categories",
                   icon: <AppstoreOutlined />,

@@ -68,6 +68,7 @@ export interface PaginationParams {
   page: number;
   pageSize: number;
   categoryId?: number;
+  categoryGroup?: number;
   sortField?: string;
   sortOrder?: string;
 }

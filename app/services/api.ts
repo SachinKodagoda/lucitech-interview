@@ -54,7 +54,8 @@ export const getProducts = async (
   products: Product[];
   total: number;
 }> => {
-  const { page, pageSize, categoryId, sortField, sortOrder } = params;
+  const { page, pageSize, categoryId, sortField, sortOrder, categoryGroup } =
+    params;
 
   // Calculate start and end for pagination
   const start = (page - 1) * pageSize;
@@ -62,11 +63,13 @@ export const getProducts = async (
 
   // Build query parameters
   let queryParams: Record<string, any> = {};
-  // eslint-disable-next-line no-console
-  console.log("categoryId: =-->", categoryId);
 
   if (categoryId) {
     queryParams.category_id = categoryId;
+  }
+
+  if (categoryGroup) {
+    queryParams.category_group = categoryGroup;
   }
 
   if (sortField) {

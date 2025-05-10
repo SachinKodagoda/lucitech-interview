@@ -36,6 +36,26 @@
       "id": "6",
       "name": "Women",
       "parent_id": 4
+    },
+    {
+      "id": "7",
+      "name": "Home & Kitchen",
+      "parent_id": null
+    },
+    {
+      "id": "8",
+      "name": "Appliances",
+      "parent_id": 7
+    },
+    {
+      "id": "9",
+      "name": "Furniture",
+      "parent_id": 7
+    },
+    {
+      "id": "10",
+      "name": "Books",
+      "parent_id": null
     }
   ],
   "products": [
@@ -43,6 +63,7 @@
       "id": "1",
       "name": "iPhone 13",
       "category_id": 2,
+      "category_group": 1,
       "attributes": [
         {
           "code": "price",
@@ -70,6 +91,7 @@
       "id": "2",
       "name": "Samsung Galaxy S21",
       "category_id": 2,
+      "category_group": 1,
       "attributes": [
         {
           "code": "price",
@@ -97,6 +119,7 @@
       "id": "3",
       "name": "MacBook Pro",
       "category_id": 3,
+      "category_group": 1,
       "attributes": [
         {
           "code": "price",
@@ -124,6 +147,7 @@
       "id": "4",
       "name": "Dell XPS 13",
       "category_id": 3,
+      "category_group": 1,
       "attributes": [
         {
           "code": "price",
@@ -146,6 +170,7 @@
       "id": "5",
       "name": "Men's T-Shirt",
       "category_id": 5,
+      "category_group": 4,
       "attributes": [
         {
           "code": "price",
@@ -168,6 +193,7 @@
       "id": "6",
       "name": "Women's Jeans",
       "category_id": 6,
+      "category_group": 4,
       "attributes": [
         {
           "code": "price",
