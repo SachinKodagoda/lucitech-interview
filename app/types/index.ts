@@ -46,7 +46,7 @@ export interface ProductState {
   error: string | null;
   pagination: {
     page: number;
-    pageSize: number;
+    page_size: number;
     total: number;
   };
   sortField: string;
@@ -66,7 +66,7 @@ export interface LoginCredentials {
 
 export interface PaginationParams {
   page: number;
-  pageSize: number;
+  page_size: number;
   category_id?: number;
   category_group?: number;
   sortField?: string;

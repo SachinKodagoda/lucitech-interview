@@ -54,12 +54,12 @@ export const getProducts = async (
   products: Product[];
   total: number;
 }> => {
-  const { page, pageSize, category_id, sortField, sortOrder, category_group } =
+  const { page, page_size, category_id, sortField, sortOrder, category_group } =
     params;
 
   // Calculate start and end for pagination
-  const start = (page - 1) * pageSize;
-  const end = page * pageSize;
+  const start = (page - 1) * page_size;
+  const end = page * page_size;
 
   // Build query parameters
   let queryParams: Record<string, any> = {};
@@ -87,7 +87,7 @@ export const getProducts = async (
     params: {
       ...queryParams,
       _start: start,
-      _limit: pageSize,
+      _limit: page_size,
     },
   });
 

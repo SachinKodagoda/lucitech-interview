@@ -24,8 +24,16 @@ const ProductList: React.FC = () => {
     ? parseInt(searchParams.get("category_id")!)
     : undefined;
 
+  const page_size = searchParams.get("page_size")
+    ? parseInt(searchParams.get("page_size")!)
+    : undefined;
+
   const categoryGroup = searchParams.get("category_group")
     ? parseInt(searchParams.get("category_group")!)
+    : undefined;
+
+  const page = searchParams.get("page")
+    ? parseInt(searchParams.get("page")!)
     : undefined;
 
   const { products, loading, pagination, sortField, sortOrder } =
@@ -47,7 +55,7 @@ const ProductList: React.FC = () => {
     dispatch(
       fetchProducts({
         page: pagination.page,
-        pageSize: pagination.pageSize,
+        page_size: pagination.page_size,
         category_id: categoryId,
         category_group: categoryGroup,
         sortField,
@@ -56,8 +64,10 @@ const ProductList: React.FC = () => {
     );
   }, [
     dispatch,
-    pagination.page,
-    pagination.pageSize,
+    // pagination.page,
+    // pagination.page_size,
+    page_size,
+    page,
     categoryId,
     categoryGroup,
     sortField,
@@ -144,8 +154,22 @@ const ProductList: React.FC = () => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <span style={{ marginRight: "8px" }}>Items per page: </span>
           <Select
-            value={pagination.pageSize}
-            onChange={(value) => dispatch(setPageSize(value))}
+            value={pagination.page_size}
+            onChange={(value) => {
+              // navigate(`/dashboard/products/${record.id}`)
+              dispatch(setPageSize(value));
+              // Create new URLSearchParams based on current params
+              const params = new URLSearchParams(searchParams);
+
+              // Update or add page_size parameter
+              params.set("page_size", value.toString());
+
+              // Reset to page 1 when changing items per page
+              params.set("page", "1");
+
+              // Navigate to the same route but with updated query params
+              navigate(`?${params.toString()}`);
+            }}
             style={{ width: 120 }}
           >
             <Option value={5}>5</Option>
@@ -169,7 +193,7 @@ const ProductList: React.FC = () => {
           rowKey="id"
           pagination={{
             current: pagination.page,
-            pageSize: pagination.pageSize,
+            pageSize: pagination.page_size,
             total: pagination.total,
             onChange: (page) => dispatch(setPage(page)),
             showSizeChanger: false,

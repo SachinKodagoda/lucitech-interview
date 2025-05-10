@@ -14,7 +14,7 @@ const initialState: ProductState = {
   error: null,
   pagination: {
     page: 1,
-    pageSize: 10,
+    page_size: 10,
     total: 0,
   },
   sortField: "id",
@@ -71,7 +71,7 @@ const productsSlice = createSlice({
       state.pagination.page = action.payload;
     },
     setPageSize: (state, action: PayloadAction<number>) => {
-      state.pagination.pageSize = action.payload;
+      state.pagination.page_size = action.payload;
       state.pagination.page = 1; // Reset to first page when changing page size
     },
     setSortField: (state, action: PayloadAction<string>) => {
