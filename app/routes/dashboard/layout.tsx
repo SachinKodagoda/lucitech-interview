@@ -5,7 +5,7 @@ import {
   AppstoreOutlined,
   ShoppingOutlined,
 } from "@ant-design/icons";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, useNavigate, useSearchParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "~/hooks";
 import { logout } from "~/stores/slices/authSlice";
 import { fetchCategories } from "~/stores/slices/categorySlice";
@@ -25,6 +25,14 @@ interface categoryList {
 const AppLayout: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const categoryId = searchParams.get("category_id")
+    ? parseInt(searchParams.get("category_id")!)
+    : undefined;
+
+  const categoryGroup = searchParams.get("category_group")
+    ? parseInt(searchParams.get("category_group")!)
+    : undefined;
   const { categories, loading: categoriesLoading } = useAppSelector(
     (state) => state.categories
   );
@@ -39,6 +47,44 @@ const AppLayout: React.FC = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login");
+  };
+
+  const getSelectedKeys = () => {
+    if (categoryId) {
+      // Find the menu item that corresponds to this category ID
+      const selectedItem = categories.find(
+        (cat) => `${cat.id}` === `${categoryId}`
+      );
+      if (selectedItem) {
+        // Find the index in the menuItems array
+        for (const menuItem of menuItems) {
+          const childIndex = menuItem.children?.findIndex(
+            (child) => `${child.id}` === `${categoryId}`
+          );
+          if (
+            childIndex !== undefined &&
+            childIndex >= 0 &&
+            menuItem.children &&
+            menuItem.children[childIndex]
+          ) {
+            return [`${menuItem.children[childIndex].key}`];
+          }
+        }
+      }
+    }
+
+    if (categoryGroup) {
+      // Find the menu item for the category group
+      const groupItem = menuItems.find(
+        (item) => `${item.id}` === `${categoryGroup}`
+      );
+      if (groupItem) {
+        return [groupItem.key];
+      }
+    }
+
+    // Default to "all-products" if no category is selected
+    return categoryId || categoryGroup ? [] : ["all-products"];
   };
 
   const menuItems = categories.reduce((acc, curr, index) => {
@@ -73,76 +119,69 @@ const AppLayout: React.FC = () => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          background: "#fff",
-          padding: "0 24px",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <ShoppingOutlined style={{ fontSize: "24px", marginRight: "12px" }} />
-          <Title level={4} style={{ margin: 0 }}>
-            Product Management System
-          </Title>
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center" }}>
-          {user && (
-            <Typography.Text style={{ marginRight: "16px" }}>
-              {user.email}
-            </Typography.Text>
-          )}
-          <Button
-            icon={<LogoutOutlined />}
-            onClick={handleLogout}
-            type="primary"
-            danger
-          >
-            Logout
-          </Button>
-        </div>
-      </Header>
-
       <Layout>
         <Sider
           width={250}
-          style={{ background: "#fff", boxShadow: "2px 0 8px rgba(0,0,0,0.1)" }}
+          style={{
+            background: "#fff",
+            boxShadow: "2px 0 8px rgba(0,0,0,0.1)",
+          }}
         >
-          {categoriesLoading ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                padding: "24px",
-              }}
-            >
-              <Spin />
+          <div className="flex flex-col gap-2 justify-between h-full">
+            <div>
+              <div className="pr-6 flex min-h-[60px] justify-center items-center border-b font-bold border-gray-500/50">
+                Home24 BXP
+              </div>
+
+              {categoriesLoading ? (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    padding: "24px",
+                  }}
+                >
+                  <Spin />
+                </div>
+              ) : (
+                <Menu
+                  mode="inline"
+                  style={{ borderRight: 0 }}
+                  defaultOpenKeys={["categories"]}
+                  selectedKeys={getSelectedKeys()}
+                  items={[
+                    {
+                      key: "all-products",
+                      icon: <ShoppingOutlined />,
+                      label: "All Products",
+                      onClick: () => navigate(`/dashboard`),
+                    },
+                    {
+                      key: "categories",
+                      icon: <AppstoreOutlined />,
+                      label: "Categories",
+                      children: menuItems,
+                    },
+                  ]}
+                />
+              )}
             </div>
-          ) : (
-            <Menu
-              mode="inline"
-              style={{ borderRight: 0 }}
-              defaultOpenKeys={["categories"]}
-              items={[
-                {
-                  key: "all-products",
-                  icon: <ShoppingOutlined />,
-                  label: "All Products",
-                  onClick: () => navigate(`/dashboard`),
-                },
-                {
-                  key: "categories",
-                  icon: <AppstoreOutlined />,
-                  label: "Categories",
-                  children: menuItems,
-                },
-              ]}
-            />
-          )}
+            <div className="flex flex-col items-center p-6">
+              {user && (
+                <Typography.Text style={{ marginRight: "16px" }}>
+                  {user.email}
+                </Typography.Text>
+              )}
+              <Button
+                icon={<LogoutOutlined />}
+                onClick={handleLogout}
+                type="primary"
+                danger
+              >
+                Logout
+              </Button>
+            </div>
+          </div>
         </Sider>
 
         <Layout style={{ padding: "24px" }}>
