@@ -9,6 +9,9 @@ import {
 
 import type { Route } from "./+types/root";
 import "@/styles/app.css";
+import { Provider } from "react-redux";
+import { store } from "./stores";
+import { ConfigProvider } from "antd";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -42,7 +45,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <Provider store={store}>
+      <ConfigProvider
+        theme={
+          {
+            // token: {
+            //   colorPrimary: "#1890ff",
+            //   borderRadius: 4,
+            // },
+          }
+        }
+      >
+        {" "}
+        <Outlet />
+      </ConfigProvider>
+    </Provider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

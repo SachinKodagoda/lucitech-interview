@@ -1,15 +1,63 @@
 @import "tailwindcss";
-
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+/*
+.ant-layout-header {
+  padding: 0 24px;
+  height: 64px;
+  line-height: 64px;
 }
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
+.ant-layout-content {
+  min-height: calc(100vh - 64px);
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+.ant-menu-inline .ant-menu-item {
+  height: 40px;
+  line-height: 40px;
+}
+
+.ant-descriptions-item-label {
+  font-weight: 600;
+  background-color: #fafafa;
+}
+
+.ant-tag {
+  margin-bottom: 8px;
+}
+
+.header-title {
+  color: #1890ff;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.product-card {
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-tags {
+  margin-top: 8px;
+}
+
+.attribute-form-item {
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 16px;
+}
+
+.attribute-form-item:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .ant-descriptions-item-label,
+  .ant-descriptions-item-content {
+    padding: 8px;
   }
-}
+} */
