@@ -54,7 +54,7 @@ export const getProducts = async (
   products: Product[];
   total: number;
 }> => {
-  const { page, pageSize, categoryId, sortField, sortOrder, categoryGroup } =
+  const { page, pageSize, category_id, sortField, sortOrder, category_group } =
     params;
 
   // Calculate start and end for pagination
@@ -64,12 +64,12 @@ export const getProducts = async (
   // Build query parameters
   let queryParams: Record<string, any> = {};
 
-  if (categoryId) {
-    queryParams.category_id = categoryId;
+  if (category_id) {
+    queryParams.category_id = category_id;
   }
 
-  if (categoryGroup) {
-    queryParams.category_group = categoryGroup;
+  if (category_group) {
+    queryParams.category_group = category_group;
   }
 
   if (sortField) {
@@ -99,11 +99,6 @@ export const getProducts = async (
 
 export const getProductById = async (id: number): Promise<Product> => {
   const response = await api.get(`/products/${id}`);
-  return response.data;
-};
-
-export const getProductByCategoryId = async (id: number): Promise<Product> => {
-  const response = await api.get(`/products?category_id=2`);
   return response.data;
 };
 

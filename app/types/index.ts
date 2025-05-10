@@ -67,8 +67,8 @@ export interface LoginCredentials {
 export interface PaginationParams {
   page: number;
   pageSize: number;
-  categoryId?: number;
-  categoryGroup?: number;
+  category_id?: number;
+  category_group?: number;
   sortField?: string;
   sortOrder?: string;
 }

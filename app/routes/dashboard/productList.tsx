@@ -20,8 +20,12 @@ const ProductList: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const categoryId = searchParams.get("categoryId")
-    ? parseInt(searchParams.get("categoryId")!)
+  const categoryId = searchParams.get("category_id")
+    ? parseInt(searchParams.get("category_id")!)
+    : undefined;
+
+  const categoryGroup = searchParams.get("category_group")
+    ? parseInt(searchParams.get("category_group")!)
     : undefined;
 
   const { products, loading, pagination, sortField, sortOrder } =
@@ -29,10 +33,14 @@ const ProductList: React.FC = () => {
   const { categories } = useAppSelector((state) => state.categories);
 
   // Get category name for display
-  const categoryName = categoryId
-    ? categories.find((cat) => `${cat.id}` === `${categoryId}`)?.name ||
-      "Unknown Category"
-    : "All Products";
+  const categoryName =
+    categoryId || categoryGroup
+      ? categories.find(
+          (cat) =>
+            `${cat.id}` === `${categoryId}` ||
+            `${cat.id}` === `${categoryGroup}`
+        )?.name || "Unknown Category"
+      : "All Products";
 
   useEffect(() => {
     // Fetch products when component mounts or when pagination/sort changes
@@ -40,7 +48,8 @@ const ProductList: React.FC = () => {
       fetchProducts({
         page: pagination.page,
         pageSize: pagination.pageSize,
-        categoryId,
+        category_id: categoryId,
+        category_group: categoryGroup,
         sortField,
         sortOrder: sortOrder || undefined,
       })
@@ -50,6 +59,7 @@ const ProductList: React.FC = () => {
     pagination.page,
     pagination.pageSize,
     categoryId,
+    categoryGroup,
     sortField,
     sortOrder,
   ]);

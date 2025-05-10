@@ -5,7 +5,7 @@ import {
   AppstoreOutlined,
   ShoppingOutlined,
 } from "@ant-design/icons";
-import { Outlet, useNavigate, useLocation } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "~/hooks";
 import { logout } from "~/stores/slices/authSlice";
 import { fetchCategories } from "~/stores/slices/categorySlice";
@@ -25,7 +25,6 @@ interface categoryList {
 const AppLayout: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const { categories, loading: categoriesLoading } = useAppSelector(
     (state) => state.categories
   );
@@ -49,7 +48,7 @@ const AppLayout: React.FC = () => {
         id: `${curr.id}`,
         label: curr.name,
         key: `${index}-${curr.id}`,
-        onClick: () => navigate(`/dashboard?categoryId=${curr.id}`),
+        onClick: () => navigate(`/dashboard?category_id=${curr.id}`),
       });
     } else {
       acc.push({
@@ -113,17 +112,6 @@ const AppLayout: React.FC = () => {
           width={250}
           style={{ background: "#fff", boxShadow: "2px 0 8px rgba(0,0,0,0.1)" }}
         >
-          <div style={{ padding: "24px 16px" }}>
-            <Button
-              type="primary"
-              icon={<ShoppingOutlined />}
-              onClick={() => navigate("/dashboard")}
-              style={{ marginBottom: "16px", width: "100%" }}
-            >
-              All Products
-            </Button>
-          </div>
-
           {categoriesLoading ? (
             <div
               style={{

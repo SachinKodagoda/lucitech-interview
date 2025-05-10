@@ -4,12 +4,7 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 import type { ProductState, Product, PaginationParams } from "~/types";
-import {
-  getProducts,
-  getProductById,
-  updateProduct,
-  getProductByCategoryId,
-} from "../../services/api";
+import { getProducts, getProductById, updateProduct } from "../../services/api";
 
 const initialState: ProductState = {
   products: [],
@@ -46,20 +41,6 @@ export const fetchProductById = createAsyncThunk(
   async (id: number, { rejectWithValue }) => {
     try {
       return await getProductById(id);
-    } catch (error) {
-      return rejectWithValue(
-        `Failed to fetch product with ID ${id}. Please try again later.`
-      );
-    }
-  }
-);
-
-// Create the fetchProductByCategoryId async thunk
-export const fetchProductByCategoryId = createAsyncThunk(
-  "products/fetchProductByCategoryId",
-  async (id: number, { rejectWithValue }): Promise<any> => {
-    try {
-      return await getProductByCategoryId(id);
     } catch (error) {
       return rejectWithValue(
         `Failed to fetch product with ID ${id}. Please try again later.`

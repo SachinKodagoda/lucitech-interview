@@ -69,9 +69,9 @@ const ProductDetail: React.FC = () => {
     }
   }, [currentProduct, isEditing, form]);
 
-  const getCategoryName = (categoryId: number) => {
+  const getCategoryName = (category_id: number) => {
     return (
-      categories.find((cat) => cat.id === categoryId)?.name ||
+      categories.find((cat) => cat.id === category_id)?.name ||
       "Unknown Category"
     );
   };
