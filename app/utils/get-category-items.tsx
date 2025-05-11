@@ -27,7 +27,7 @@ export const getCategoryItems = () => {
 
           onClick: () =>
             navigate(
-              `/dashboard?category_id=${curr.id}&page_size=${pagination.page_size}&page=${pagination.page}`
+              `/dashboard?category_id=${curr.id}&page_size=${pagination.page_size}&page=1`
             ),
         });
       } else {
@@ -41,7 +41,7 @@ export const getCategoryItems = () => {
                 onClick={(e) => {
                   e.stopPropagation();
                   navigate(
-                    `/dashboard?category_group=${curr.id}&page_size=${pagination.page_size}&page=${pagination.page}`
+                    `/dashboard?category_group=${curr.id}&page_size=${pagination.page_size}&page=1`
                   );
                 }}
                 type="button"
@@ -56,7 +56,7 @@ export const getCategoryItems = () => {
       }
       return acc;
     }, [] as categoryList[]);
-  }, [categories, pagination.page, pagination.page_size, navigate]);
+  }, [categories, pagination.page_size, navigate]);
 
   return menuItems;
 };

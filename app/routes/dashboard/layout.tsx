@@ -4,12 +4,20 @@ import LastModifiedProduct from "@/components/widgets/last-modified-product";
 import { getCategoryItems } from "@/utils/get-category-items";
 import { getSelectedCategory } from "@/utils/get-selected-category";
 import SideMenu from "@/ui/side-menu";
+import { useEffect } from "react";
+import { useAppDispatch } from "@/hooks/index";
+import { fetchCategories } from "@/stores/slices/category-slice";
 const { Sider } = Layout;
 
 const AppLayout = () => {
   const navigate = useNavigate();
   const menuItems = getCategoryItems();
   const selectedKeys = getSelectedCategory(menuItems);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
 
   return (
     <div className="flex h-dvh overflow-hidden">

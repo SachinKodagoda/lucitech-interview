@@ -22,9 +22,7 @@ export default function SideMenu({ selectedKeys, navigate, menuItems }: props) {
     (state) => state.categories
   );
   const onAllProductClick = () => {
-    navigate(
-      `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
-    );
+    navigate(`/dashboard?page_size=${pagination.page_size}&page=1`);
   };
 
   return (
