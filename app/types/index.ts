@@ -1,3 +1,5 @@
+import type { ReactElement } from "react";
+
 export type categoryId = number | null;
 
 export type categoryGroup = number | null;
@@ -80,3 +82,16 @@ export interface PaginationParams {
 
 export type DivEvent = React.MouseEvent<HTMLDivElement, MouseEvent>;
 export type ButtonEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>;
+
+export interface categoryList {
+  id: string;
+  label: ReactElement | string;
+  key: string;
+  children?: categoryList[];
+  onClick?: () => void;
+}
+
+export interface pagination {
+  page_size: number;
+  page: number;
+}
