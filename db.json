@@ -67,7 +67,7 @@
       "attributes": [
         {
           "code": "price",
-          "value": 999,
+          "value": 9994,
           "type": "number"
         },
         {
@@ -82,7 +82,11 @@
         },
         {
           "code": "tags",
-          "value": ["smartphone", "apple", "5G"],
+          "value": [
+            "smartphone",
+            "apple",
+            "5G"
+          ],
           "type": "tags"
         }
       ]
@@ -110,7 +114,11 @@
         },
         {
           "code": "tags",
-          "value": ["smartphone", "samsung", "5G"],
+          "value": [
+            "smartphone",
+            "samsung",
+            "5G"
+          ],
           "type": "tags"
         }
       ]
@@ -179,7 +187,12 @@
         },
         {
           "code": "sizes",
-          "value": ["S", "M", "L", "XL"],
+          "value": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
           "type": "tags"
         },
         {
@@ -235,7 +248,11 @@
         },
         {
           "code": "tags",
-          "value": ["kitchen", "appliance", "brewing"],
+          "value": [
+            "kitchen",
+            "appliance",
+            "brewing"
+          ],
           "type": "tags"
         }
       ]
@@ -319,7 +336,11 @@
         },
         {
           "code": "formats",
-          "value": ["paperback", "hardcover", "ebook"],
+          "value": [
+            "paperback",
+            "hardcover",
+            "ebook"
+          ],
           "type": "tags"
         }
       ]
@@ -375,7 +396,11 @@
         },
         {
           "code": "sizes",
-          "value": ["S", "M", "L"],
+          "value": [
+            "S",
+            "M",
+            "L"
+          ],
           "type": "tags"
         },
         {

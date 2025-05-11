@@ -94,3 +94,5 @@ export interface categoryList {
   children?: categoryList[];
   onClick?: () => void;
 }
+
+export type NotificationType = "success" | "info" | "warning" | "error";

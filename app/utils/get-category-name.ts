@@ -5,6 +5,7 @@ type props = {
   categoryGroup: categoryGroup;
   categories: Category[];
 };
+
 export const getCategoryName = ({
   categoryId,
   categoryGroup,
@@ -20,4 +21,10 @@ export const getCategoryName = ({
       : "All Products";
 
   return categoryName;
+};
+
+export const getCategory = ({ categoryId, categories }: Partial<props>) => {
+  return (
+    categories?.find((cat) => cat.id === categoryId)?.name || "Unknown Category"
+  );
 };

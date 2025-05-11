@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-
-import { useParams, useNavigate } from "react-router";
 import {
   Typography,
   Card,
@@ -8,218 +5,44 @@ import {
   Button,
   Descriptions,
   Divider,
-  Tag,
-  Input,
-  InputNumber,
-  Checkbox,
-  Select,
   Form,
   message,
-  notification,
 } from "antd";
 
-import {
-  fetchProductById,
-  updateProductAttributes,
-  clearCurrentProduct,
-} from "@/stores/slices/product-slice";
-import type { AttributeValue, Product } from "@/types";
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { updateProductAttributes } from "@/stores/slices/product-slice";
+import type { Product } from "@/types";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoSaveOutline } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
+import { useProductDetailActions } from "@/hooks/use-product-detail-actions";
+import { renderValue } from "@/utils/render-attributes";
+import { getCategory } from "@/utils/get-category-name";
+import { renderAttributeInput } from "@/utils/render-attribute-input";
+import ProductNotFound from "@/ui/product-not-found";
+import Loading from "@/ui/loading";
 
 const { Title, Text } = Typography;
 
-type NotificationType = "success" | "info" | "warning" | "error";
-
 const ProductDetail: React.FC = () => {
-  const { productId } = useParams<{ productId: string }>();
-  const [api, contextHolder] = notification.useNotification();
-
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const [form] = Form.useForm();
-
-  const openNotificationWithIcon = (type: NotificationType) => {
-    api[type]({
-      message: "Notification Title",
-      description:
-        "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
-    });
-  };
-
-  const { currentProduct, loading, pagination } = useAppSelector(
-    (state) => state.products
-  );
-  const { categories } = useAppSelector((state) => state.categories);
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [editableAttributes, setEditableAttributes] = useState<
-    AttributeValue[]
-  >([]);
-
-  useEffect(() => {
-    if (productId) {
-      dispatch(fetchProductById(Number.parseInt(productId)));
-    }
-    // Cleanup when component unmounts
-    return () => {
-      dispatch(clearCurrentProduct());
-    };
-  }, [dispatch, productId]);
-
-  useEffect(() => {
-    // Initialize form with current product attributes
-    if (currentProduct && isEditing) {
-      setEditableAttributes([...currentProduct.attributes]);
-
-      const initialValues: Record<string, string> = {};
-      for (const attr of currentProduct.attributes) {
-        initialValues[attr.code] = attr.value;
-      }
-
-      form.setFieldsValue(initialValues);
-    }
-  }, [currentProduct, isEditing, form]);
-
-  const getCategoryName = (category_id: number) => {
-    return (
-      categories.find((cat) => cat.id === category_id)?.name ||
-      "Unknown Category"
-    );
-  };
-
-  const handleSave = async () => {
-    try {
-      const values = await form.validateFields();
-      // Update attributes with form values
-      const updatedAttributes = editableAttributes.map((attr) => ({
-        ...attr,
-        value: values[attr.code],
-      }));
-
-      if (currentProduct) {
-        const updatedProduct: Product = {
-          ...currentProduct,
-          attributes: updatedAttributes,
-        };
-
-        await dispatch(updateProductAttributes(updatedProduct));
-        message.success("Product updated successfully");
-        setIsEditing(false);
-      }
-    } catch {
-      openNotificationWithIcon("error");
-    }
-  };
-
-  const renderAttributeInput = (attribute: AttributeValue) => {
-    switch (attribute.type) {
-      case "number":
-        return (
-          <Form.Item
-            name={attribute.code}
-            rules={[
-              { required: true, message: `Please enter ${attribute.code}` },
-            ]}
-          >
-            <InputNumber style={{ width: "100%" }} />
-          </Form.Item>
-        );
-      case "text":
-        return (
-          <Form.Item
-            name={attribute.code}
-            rules={[
-              { required: true, message: `Please enter ${attribute.code}` },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-        );
-      case "url":
-        return (
-          <Form.Item
-            name={attribute.code}
-            rules={[
-              { required: true, message: `Please enter ${attribute.code}` },
-              { type: "url", message: "Please enter a valid URL" },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-        );
-      case "boolean":
-        return (
-          <Form.Item name={attribute.code} valuePropName="checked">
-            <Checkbox />
-          </Form.Item>
-        );
-      case "tags":
-        return (
-          <Form.Item name={attribute.code}>
-            <Select mode="tags" style={{ width: "100%" }} />
-          </Form.Item>
-        );
-      default:
-        return null;
-    }
-  };
-
-  const renderAttributeValue = (attribute: AttributeValue) => {
-    switch (attribute.type) {
-      case "boolean":
-        return attribute.value ? "Yes" : "No";
-      case "tags":
-        return Array.isArray(attribute.value) ? (
-          <>
-            {attribute.value.map((tag, index) => (
-              <Tag key={`tag-${index + 1}`} color="blue">
-                {tag}
-              </Tag>
-            ))}
-          </>
-        ) : (
-          attribute.value
-        );
-      case "url":
-        return (
-          <a href={attribute.value} target="_blank" rel="noopener noreferrer">
-            {attribute.value}
-          </a>
-        );
-      default:
-        return String(attribute.value);
-    }
-  };
+  const {
+    navigate,
+    categories,
+    pagination,
+    loading,
+    contextHolder,
+    setIsEditing,
+    currentProduct,
+    isEditing,
+    form,
+    handleSave,
+  } = useProductDetailActions();
 
   if (loading) {
-    return (
-      <div
-        style={{ display: "flex", justifyContent: "center", padding: "40px" }}
-      >
-        <Spin size="large" />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (!currentProduct) {
-    return (
-      <Card>
-        <Title level={4}>Product not found</Title>
-        <Button
-          type="primary"
-          onClick={() =>
-            navigate(
-              `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
-            )
-          }
-        >
-          Back to Product List
-        </Button>
-      </Card>
-    );
+    return <ProductNotFound />;
   }
 
   return (
@@ -275,7 +98,10 @@ const ProductDetail: React.FC = () => {
             {currentProduct.id}
           </Descriptions.Item>
           <Descriptions.Item label="Category">
-            {getCategoryName(currentProduct.category_id)}
+            {getCategory({
+              categoryId: currentProduct.category_id,
+              categories,
+            })}
           </Descriptions.Item>
         </Descriptions>
 
@@ -302,7 +128,7 @@ const ProductDetail: React.FC = () => {
                 key={`description-${index + 1}`}
                 label={attribute.code}
               >
-                {renderAttributeValue(attribute)}
+                {renderValue(attribute)}
                 <div>
                   <Text type="secondary">Type: {attribute.type}</Text>
                 </div>
