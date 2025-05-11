@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Tag, Typography, Button } from "antd";
 import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
-import type { Product } from "~/types";
+import type { Product } from "@/types";
 
 const { Title, Text } = Typography;
 

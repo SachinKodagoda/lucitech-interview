@@ -2,7 +2,30 @@
 
 A modern, production-ready template for building full-stack React applications using React Router.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+```
+app
+├── components
+├── hooks
+├── services
+├── styles
+├── types
+├── utils
+├── root.tsx
+├── stores
+│   ├── slices
+│   └── index.tsx
+├── routes
+│   ├── auth
+│   │   ├── login.tsx
+│   │   └── register.tsx
+│   ├── dashboard
+│   │   ├── layout.tsx
+│   │   ├── product-details.tsx
+│   │   └── product-list.tsx
+│   ├── not-found.tsx
+│   └── private-route.tsx
+└── routes.tsx
+```
 
 ## Features
 
@@ -30,16 +53,6 @@ Start the development server with HMR:
 
 ```bash
 npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
 ```
 
 ## Deployment

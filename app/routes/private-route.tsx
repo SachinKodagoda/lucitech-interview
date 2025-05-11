@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAppSelector } from "../hooks";
+import { useAppSelector } from "@/hooks";
 import { Navigate, Outlet } from "react-router";
 
 const PrivateRoute: React.FC = () => {
@@ -13,7 +13,7 @@ const PrivateRoute: React.FC = () => {
     }
   }, [isAuthenticated]);
 
-  return shouldNavigate ? <Navigate to="/login" /> : <Outlet />;
+  return shouldNavigate ? <Navigate to="/" /> : <Outlet />;
 };
 
 export default PrivateRoute;

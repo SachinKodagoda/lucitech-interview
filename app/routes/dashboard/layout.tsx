@@ -6,10 +6,19 @@ import {
   ShoppingOutlined,
 } from "@ant-design/icons";
 import { Outlet, useNavigate, useSearchParams } from "react-router";
-import { useAppDispatch, useAppSelector } from "~/hooks";
-import { logout } from "~/stores/slices/authSlice";
-import { fetchCategories } from "~/stores/slices/categorySlice";
-import LastModifiedProduct from "../lastModifiedProduct";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { logout } from "@/stores/slices/auth-slice";
+import { fetchCategories } from "@/stores/slices/category-slice";
+import LastModifiedProduct from "@/components/widgets/last-modified-product";
+
+// import type { Route } from "./+types/home";
+
+// export function meta({}: Route.MetaArgs) {
+//   return [
+//     { title: "New React Router App" },
+//     { name: "description", content: "Welcome to React Router!" },
+//   ];
+// }
 
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
@@ -36,7 +45,9 @@ const AppLayout: React.FC = () => {
   const { categories, loading: categoriesLoading } = useAppSelector(
     (state) => state.categories
   );
-  const { lastModifiedProduct } = useAppSelector((state) => state.products);
+  const { lastModifiedProduct, pagination } = useAppSelector(
+    (state) => state.products
+  );
   const { user } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
@@ -46,7 +57,7 @@ const AppLayout: React.FC = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
+    navigate("/");
   };
 
   const getSelectedKeys = () => {
@@ -94,7 +105,11 @@ const AppLayout: React.FC = () => {
         id: `${curr.id}`,
         label: curr.name,
         key: `${index}-${curr.id}`,
-        onClick: () => navigate(`/dashboard?category_id=${curr.id}`),
+
+        onClick: () =>
+          navigate(
+            `/dashboard?category_id=${curr.id}&page_size=${pagination.page_size}&page=${pagination.page}`
+          ),
       });
     } else {
       acc.push({
@@ -104,7 +119,9 @@ const AppLayout: React.FC = () => {
           <div
             onClick={(e) => {
               e.stopPropagation();
-              navigate(`/dashboard?category_group=${curr.id}`);
+              navigate(
+                `/dashboard?category_group=${curr.id}&page_size=${pagination.page_size}&page=${pagination.page}`
+              );
             }}
           >
             {curr.name}
@@ -154,7 +171,10 @@ const AppLayout: React.FC = () => {
                       key: "all-products",
                       icon: <ShoppingOutlined />,
                       label: "All Products",
-                      onClick: () => navigate(`/dashboard`),
+                      onClick: () =>
+                        navigate(
+                          `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
+                        ),
                     },
                     {
                       key: "categories",

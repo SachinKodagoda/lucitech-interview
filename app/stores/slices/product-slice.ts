@@ -3,8 +3,8 @@ import {
   createAsyncThunk,
   type PayloadAction,
 } from "@reduxjs/toolkit";
-import type { ProductState, Product, PaginationParams } from "~/types";
-import { getProducts, getProductById, updateProduct } from "../../services/api";
+import type { ProductState, Product, PaginationParams } from "@/types";
+import { getProducts, getProductById, updateProduct } from "@/services/api";
 
 const initialState: ProductState = {
   products: [],

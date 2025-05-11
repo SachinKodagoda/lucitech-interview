@@ -2,9 +2,9 @@
 import React, { useEffect } from "react";
 import type { FormProps } from "antd";
 import { Button, Checkbox, Form, Input, message } from "antd";
-import { clearError, loginUser } from "~/stores/slices/authSlice";
+import { clearError, loginUser } from "@/stores/slices/auth-slice";
 import { useNavigate } from "react-router";
-import { useAppDispatch, useAppSelector } from "~/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 
 type FieldType = {
   email: string;
@@ -32,7 +32,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/dashboard");
+      navigate("/dashboard?page_size=5&page=1");
     }
   }, [isAuthenticated, navigate]);
 

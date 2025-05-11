@@ -5,7 +5,7 @@ import type {
   Product,
   LoginCredentials,
   PaginationParams,
-} from "~/types";
+} from "@/types";
 
 const API_URL = "http://localhost:3001";
 

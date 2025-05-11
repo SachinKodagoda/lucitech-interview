@@ -8,9 +8,9 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import "@/styles/app.css";
+import "@/styles/global.css";
 import { Provider } from "react-redux";
-import { store } from "./stores";
+import { store } from "@/stores";
 import { ConfigProvider } from "antd";
 
 export const links: Route.LinksFunction = () => [
@@ -57,7 +57,6 @@ export default function App() {
           }
         }
       >
-        {" "}
         <Outlet />
       </ConfigProvider>
     </Provider>

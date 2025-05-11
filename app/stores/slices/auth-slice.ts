@@ -4,8 +4,8 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 
-import { login } from "../../services/api";
-import type { AuthState, LoginCredentials, User } from "~/types";
+import { login } from "@/services/api";
+import type { AuthState, LoginCredentials, User } from "@/types";
 
 const initialState: AuthState = {
   user: null,

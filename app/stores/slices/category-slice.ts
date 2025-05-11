@@ -3,8 +3,8 @@ import {
   createAsyncThunk,
   type PayloadAction,
 } from "@reduxjs/toolkit";
-import type { CategoryState, Category } from "~/types";
-import { getCategories } from "../../services/api";
+import type { CategoryState, Category } from "@/types";
+import { getCategories } from "@/services/api";
 
 const initialState: CategoryState = {
   categories: [],

@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { Table, Card, Typography, Select, Spin, Button } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router";
-import { useAppDispatch, useAppSelector } from "~/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 
-import type { Product } from "~/types";
+import type { Product } from "@/types";
 import {
   fetchProducts,
   setPage,
   setPageSize,
   setSortField,
   setSortOrder,
-} from "~/stores/slices/productSlice";
+} from "@/stores/slices/product-slice";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -156,18 +156,10 @@ const ProductList: React.FC = () => {
           <Select
             value={pagination.page_size}
             onChange={(value) => {
-              // navigate(`/dashboard/products/${record.id}`)
               dispatch(setPageSize(value));
-              // Create new URLSearchParams based on current params
               const params = new URLSearchParams(searchParams);
-
-              // Update or add page_size parameter
               params.set("page_size", value.toString());
-
-              // Reset to page 1 when changing items per page
               params.set("page", "1");
-
-              // Navigate to the same route but with updated query params
               navigate(`?${params.toString()}`);
             }}
             style={{ width: 120 }}

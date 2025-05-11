@@ -24,9 +24,9 @@ import {
   fetchProductById,
   updateProductAttributes,
   clearCurrentProduct,
-} from "~/stores/slices/productSlice";
-import type { AttributeValue, Product } from "~/types";
-import { useAppDispatch, useAppSelector } from "~/hooks";
+} from "@/stores/slices/product-slice";
+import type { AttributeValue, Product } from "@/types";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 
 const { Title, Text } = Typography;
 
@@ -37,7 +37,9 @@ const ProductDetail: React.FC = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
-  const { currentProduct, loading } = useAppSelector((state) => state.products);
+  const { currentProduct, loading, pagination } = useAppSelector(
+    (state) => state.products
+  );
   const { categories } = useAppSelector((state) => state.categories);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -194,7 +196,14 @@ const ProductDetail: React.FC = () => {
     return (
       <Card>
         <Title level={4}>Product not found</Title>
-        <Button type="primary" onClick={() => navigate("/dashboard")}>
+        <Button
+          type="primary"
+          onClick={() =>
+            navigate(
+              `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
+            )
+          }
+        >
           Back to Product List
         </Button>
       </Card>
@@ -213,7 +222,11 @@ const ProductDetail: React.FC = () => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button
             icon={<ArrowLeftOutlined />}
-            onClick={() => navigate("/dashboard")}
+            onClick={() =>
+              navigate(
+                `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
+              )
+            }
             style={{ marginRight: "16px" }}
           >
             Back
