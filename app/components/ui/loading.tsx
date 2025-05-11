@@ -2,7 +2,7 @@ import { Spin } from "antd";
 
 export default function Loading() {
   return (
-    <div style={{ display: "flex", justifyContent: "center", padding: "40px" }}>
+    <div className="flex justify-center p-10">
       <Spin size="large" />
     </div>
   );

@@ -1,52 +1,27 @@
-import { Card, Tag, Typography, Button } from "antd";
+import { Card, Typography, Button } from "antd";
 import { useNavigate } from "react-router";
-import type { AttributeValue, Product } from "@/types";
 import { FaRegEye } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
+import { useAppSelector } from "@/hooks/index";
+import { renderValue } from "@/utils/render-attributes";
 
 const { Title, Text } = Typography;
 
-interface LastModifiedProductProps {
-  product: Product;
-}
-
-const LastModifiedProduct: React.FC<LastModifiedProductProps> = ({
-  product,
-}) => {
+const LastModifiedProduct = () => {
   const navigate = useNavigate();
+  const { lastModifiedProduct: product } = useAppSelector(
+    (state) => state.products
+  );
 
-  const renderAttributeValue = (attr: AttributeValue) => {
-    switch (attr.type) {
-      case "boolean":
-        return attr.value ? "Yes" : "No";
-      case "tags":
-        return Array.isArray(attr.value) ? (
-          <div>
-            {attr.value.map((tag: string, index: number) => (
-              <Tag key={`rendered-tags-${index + 1}`} color="blue">
-                {tag}
-              </Tag>
-            ))}
-          </div>
-        ) : (
-          attr.value
-        );
-      case "url":
-        return (
-          <a href={attr.value} target="_blank" rel="noopener noreferrer">
-            {attr.value}
-          </a>
-        );
-      default:
-        return String(attr.value);
-    }
-  };
+  if (!product) {
+    return null;
+  }
 
   return (
     <Card
       title={
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <MdEdit style={{ marginRight: "8px", color: "#1890ff" }} />
+        <div className="flex items-center gap-2">
+          <MdEdit className="text-[#1890ff]" />
           <span>Last Modified Product</span>
         </div>
       }
@@ -65,7 +40,7 @@ const LastModifiedProduct: React.FC<LastModifiedProductProps> = ({
         border: "1px solid #d6e4ff",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div className="flex justify-between">
         <div>
           <Title level={4} style={{ margin: 0, marginBottom: "8px" }}>
             {product.name}
@@ -75,12 +50,9 @@ const LastModifiedProduct: React.FC<LastModifiedProductProps> = ({
 
         <div>
           {product.attributes.slice(0, 3).map((attr, index) => (
-            <div
-              key={`product-attributes-${index + 1}`}
-              style={{ marginBottom: "4px" }}
-            >
+            <div className="mb-1" key={`product-attributes-${index + 1}`}>
               <Text strong>{attr.code}: </Text>
-              <Text>{renderAttributeValue(attr)}</Text>
+              <Text>{renderValue(attr)}</Text>
             </div>
           ))}
           {product.attributes.length > 3 && (

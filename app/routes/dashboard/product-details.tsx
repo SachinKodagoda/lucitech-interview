@@ -37,14 +37,8 @@ const ProductDetail = () => {
   return (
     <>
       <Card>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: "24px",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center" }}>
+        <div className="flex justify-between mb-6">
+          <div className="flex items-center">
             <Button
               icon={<FaArrowLeftLong />}
               onClick={() =>

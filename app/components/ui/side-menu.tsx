@@ -1,31 +1,32 @@
 import type { categoryList, pagination, User } from "@/types/index";
 
-import { Button, Menu, Spin, Typography } from "antd";
+import { Button, Menu, Typography } from "antd";
 import { BiSolidCategory } from "react-icons/bi";
 import { FaBagShopping } from "react-icons/fa6";
 import { IoLogOutOutline } from "react-icons/io5";
 import { VscDashboard } from "react-icons/vsc";
 import type { NavigateFunction } from "react-router";
+import Loading from "@/components/ui/loading";
+import UserSection from "./user-section";
+import { useAppSelector } from "@/hooks/index";
 
 interface props {
-  categoriesLoading: boolean;
   selectedKeys: string[];
-  pagination: pagination;
   navigate: NavigateFunction;
   menuItems: categoryList[];
-  user: User | null;
-  handleLogout: () => void;
 }
 
-export default function SideMenu({
-  categoriesLoading,
-  selectedKeys,
-  pagination,
-  navigate,
-  menuItems,
-  user,
-  handleLogout,
-}: props) {
+export default function SideMenu({ selectedKeys, navigate, menuItems }: props) {
+  const { pagination } = useAppSelector((state) => state.products);
+  const { loading: categoriesLoading } = useAppSelector(
+    (state) => state.categories
+  );
+  const onAllProductClick = () => {
+    navigate(
+      `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
+    );
+  };
+
   return (
     <div className="flex h-full flex-col justify-between gap-2">
       <div>
@@ -33,17 +34,8 @@ export default function SideMenu({
           <VscDashboard className="w-6 h-6" />
           Home24 BXP
         </div>
-
         {categoriesLoading ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              padding: "24px",
-            }}
-          >
-            <Spin />
-          </div>
+          <Loading />
         ) : (
           <Menu
             mode="inline"
@@ -55,10 +47,7 @@ export default function SideMenu({
                 key: "all-products",
                 icon: <FaBagShopping />,
                 label: "All Products",
-                onClick: () =>
-                  navigate(
-                    `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
-                  ),
+                onClick: onAllProductClick,
               },
               {
                 key: "categories",
@@ -70,17 +59,7 @@ export default function SideMenu({
           />
         )}
       </div>
-
-      <div className="flex flex-col items-center p-6 gap-2">
-        {user && <Typography.Text>{user.email}</Typography.Text>}
-        <Button
-          icon={<IoLogOutOutline />}
-          onClick={handleLogout}
-          variant="outlined"
-        >
-          Logout
-        </Button>
-      </div>
+      <UserSection />
     </div>
   );
 }

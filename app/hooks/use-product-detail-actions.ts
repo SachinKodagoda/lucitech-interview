@@ -12,7 +12,6 @@ import {
 export const useProductDetailActions = () => {
   const { productId } = useParams<{ productId: string }>();
   const [api, contextHolder] = notification.useNotification();
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
