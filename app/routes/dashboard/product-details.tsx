@@ -1,4 +1,4 @@
-import { Typography, Card, Button, Descriptions, Divider, Form } from "antd";
+import { Typography, Button, Descriptions, Divider, Form } from "antd";
 
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoSaveOutline } from "react-icons/io5";
@@ -36,9 +36,9 @@ const ProductDetail = () => {
 
   return (
     <>
-      <Card>
-        <div className="flex justify-between mb-6">
-          <div className="flex items-center">
+      <div className="p-6 border-2 border-[rgba(0,0,0,0.1)] rounded-md flex flex-col gap-6">
+        <div className="flex flex-wrap items-center justify-between gap-y-4 gap-x-2">
+          <div className="flex flex-wrap items-center justify-between gap-y-4 gap-x-2">
             <Button
               icon={<FaArrowLeftLong />}
               onClick={() =>
@@ -119,7 +119,7 @@ const ProductDetail = () => {
             ))}
           </Descriptions>
         )}
-      </Card>
+      </div>
       {contextHolder}
     </>
   );

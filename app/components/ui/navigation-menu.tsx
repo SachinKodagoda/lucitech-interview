@@ -28,7 +28,7 @@ export default function NavigationMenu({
       <div
         onClick={(e) => onToggle(e)}
         onKeyDown={(e) => onToggle(e)}
-        className="block md:hidden fixed right-2 bottom-2 bg-black text-white rounded-full max-w-max p-2 cursor-pointer"
+        className="z-40 block md:hidden fixed right-2 bottom-2 bg-black text-white rounded-full max-w-max p-2 cursor-pointer"
       >
         <MdOutlineMenu className="w-6 h-6" />
       </div>

@@ -18,8 +18,8 @@ const ProductList = () => {
   const columns = getProductListColumn();
 
   return (
-    <div className="p-6 border-2 border-[rgba(0,0,0,0.1)] rounded-md">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
+    <div className="p-6 border-2 border-[rgba(0,0,0,0.1)] rounded-md flex flex-col gap-6">
+      <div className=" flex flex-wrap items-center justify-between gap-x-2 gap-y-4">
         <h3 className="text-[#013b8e] text-xl font-bold uppercase">
           {categoryName}
         </h3>
