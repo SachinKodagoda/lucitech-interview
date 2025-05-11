@@ -1,131 +1,25 @@
-import { useEffect } from "react";
-import { Table, Card, Typography, Spin, Button } from "antd";
-import { useNavigate } from "react-router";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-
-import type { Product } from "@/types";
-
-import {
-  fetchProducts,
-  setPage,
-  setPageSize,
-  setSortField,
-  setSortOrder,
-} from "@/stores/slices/product-slice";
+import { Table, Card, Typography, Spin } from "antd";
+import { setSortField, setSortOrder } from "@/stores/slices/product-slice";
 import PerPageItems from "@/widgets/per-page-items";
-import {
-  renderAttribute,
-  renderAttributeValue,
-  renderValue,
-} from "@/utils/render-attributes";
-import { useParams } from "@/hooks/use-params-data";
-import { getCategoryName } from "@/utils/get-category-name";
-import { FaRegEye } from "react-icons/fa";
-import { cn } from "@/utils/cn";
-import { pills } from "@/elements/pills";
+import { useProductListActions } from "@/hooks/use-product-list-actions";
+import { getProductListColumn } from "@/utils/get-product-list-column";
 
 const { Title } = Typography;
 
-const ProductList: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const { categoryId, pageSize, categoryGroup, page } = useParams();
-
-  const { products, loading, pagination, sortField, sortOrder } =
-    useAppSelector((state) => state.products);
-
-  const { categories } = useAppSelector((state) => state.categories);
-
-  const categoryName = getCategoryName({
-    categoryId,
-    categoryGroup,
-    categories,
-  });
-
-  useEffect(() => {
-    // Fetch products when component mounts or when pagination/sort changes
-    dispatch(
-      fetchProducts({
-        page: page || pagination.page,
-        page_size: pageSize || pagination.page_size,
-        category_id: categoryId,
-        category_group: categoryGroup,
-        sortField,
-        sortOrder: sortOrder || undefined,
-      })
-    );
-    if (pageSize) {
-      dispatch(setPageSize(pageSize));
-    }
-    if (page) {
-      dispatch(setPage(page));
-    }
-  }, [
-    page,
-    pageSize,
-    categoryId,
-    categoryGroup,
+const ProductList = () => {
+  const {
+    dispatch,
+    navigate,
+    products,
+    pagination,
+    loading,
+    categoryName,
+    searchParams,
     sortField,
     sortOrder,
-    dispatch,
-    pagination.page,
-    pagination.page_size,
-  ]);
+  } = useProductListActions();
 
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      sorter: true,
-      sortOrder: sortField === "id" ? sortOrder : null,
-      width: 80,
-    },
-    {
-      title: "Product Name",
-      dataIndex: "name",
-      key: "name",
-      sorter: true,
-      sortOrder: sortField === "name" ? sortOrder : null,
-    },
-    {
-      title: "Price",
-      key: "price",
-      render: (_: string, record: Product) =>
-        renderAttributeValue(record, "price"),
-    },
-    {
-      title: "In Stock",
-      key: "in_stock",
-      render: (_: string, record: Product) => {
-        const filtered = renderAttribute(record, "in_stock");
-        return (
-          <div
-            className={cn(
-              filtered?.value ? pills() : pills({ intent: "red" }),
-              "min-w-16"
-            )}
-          >
-            {renderValue(filtered)}
-          </div>
-        );
-      },
-    },
-    {
-      title: "Actions",
-      key: "actions",
-      render: (_: string, record: Product) => (
-        <Button
-          type="primary"
-          icon={<FaRegEye />}
-          onClick={() => navigate(`/dashboard/products/${record.id}`)}
-        >
-          View
-        </Button>
-      ),
-    },
-  ];
+  const columns = getProductListColumn({ sortField, sortOrder, navigate });
 
   return (
     <Card
@@ -153,12 +47,18 @@ const ProductList: React.FC = () => {
           dataSource={products}
           columns={columns}
           rowKey="id"
+          scroll={{ x: "max-content" }}
           bordered
           pagination={{
             current: pagination.page,
             pageSize: pagination.page_size,
             total: pagination.total,
-            onChange: (page) => dispatch(setPage(page)),
+            onChange: (newPage) => {
+              const params = new URLSearchParams(searchParams);
+              params.set("page_size", `${pagination.page_size}`);
+              params.set("page", `${newPage}`);
+              navigate(`?${params.toString()}`);
+            },
             showSizeChanger: false,
           }}
           onChange={(pagination, filters, sorter) => {

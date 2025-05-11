@@ -45,19 +45,23 @@ export interface CategoryState {
   error: string | null;
 }
 
+export type sortOrder = "ascend" | "descend" | null;
+
+export interface pagination {
+  page: number;
+  page_size: number;
+  total: number;
+}
+
 export interface ProductState {
   products: Product[];
   currentProduct: Product | null;
   lastModifiedProduct: Product | null;
   loading: boolean;
   error: string | null;
-  pagination: {
-    page: number;
-    page_size: number;
-    total: number;
-  };
+  pagination: pagination;
   sortField: string;
-  sortOrder: "ascend" | "descend" | null;
+  sortOrder: sortOrder;
 }
 
 export interface RootState {
@@ -89,9 +93,4 @@ export interface categoryList {
   key: string;
   children?: categoryList[];
   onClick?: () => void;
-}
-
-export interface pagination {
-  page_size: number;
-  page: number;
 }

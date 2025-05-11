@@ -79,7 +79,7 @@ export const getProducts = async (
 
   // First, get total count
   const countResponse = await api.get("/products", {
-    params: { ...queryParams, _limit: 0 },
+    params: { ...queryParams },
   });
 
   // Then get paginated data
@@ -93,7 +93,7 @@ export const getProducts = async (
 
   return {
     products: response.data,
-    total: countResponse.headers["x-total-count"] || response.data.length,
+    total: countResponse.data.length || response.data.length,
   };
 };
 

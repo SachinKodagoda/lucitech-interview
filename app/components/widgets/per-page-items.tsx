@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/index";
-import { setPageSize } from "@/stores/slices/product-slice";
+import { useAppSelector } from "@/hooks/index";
+
 import { Select } from "antd";
 import { useNavigate, useSearchParams } from "react-router";
 const { Option } = Select;

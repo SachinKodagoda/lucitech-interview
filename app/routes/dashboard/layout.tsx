@@ -58,7 +58,7 @@ const AppLayout = () => {
         />
       </Sider>
 
-      <div className="flex flex-col gap-4 h-dvh overflow-y-auto w-full">
+      <div className="flex flex-col gap-4 h-dvh overflow-y-auto w-full ">
         {lastModifiedProduct && (
           <div style={{ marginBottom: "24px" }}>
             <LastModifiedProduct product={lastModifiedProduct} />
