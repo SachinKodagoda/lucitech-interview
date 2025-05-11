@@ -8,10 +8,12 @@ export interface Category {
   name: string;
 }
 
+export type attributes = "number" | "text" | "url" | "tags" | "boolean";
+
 export interface AttributeValue {
   code: string;
   value: string;
-  type: "number" | "text" | "url" | "tags" | "boolean";
+  type: attributes;
 }
 
 export interface Product {

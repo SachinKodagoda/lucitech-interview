@@ -11,7 +11,7 @@ import { logout } from "@/stores/slices/auth-slice";
 
 import { fetchCategories } from "@/stores/slices/category-slice";
 import LastModifiedProduct from "@/components/widgets/last-modified-product";
-import { useParams } from "@/hooks/use-params";
+import { useParams } from "@/hooks/use-params-data";
 import type { ButtonEvent, DivEvent } from "@/types/index";
 
 // import type { Route } from "./+types/home";

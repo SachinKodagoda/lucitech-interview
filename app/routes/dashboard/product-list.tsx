@@ -14,7 +14,7 @@ import {
 } from "@/stores/slices/product-slice";
 import PerPageItems from "@/widgets/per-page-items";
 import { renderAttributeValue } from "@/utils/render-attributes";
-import { useParams } from "@/hooks/use-params";
+import { useParams } from "@/hooks/use-params-data";
 import { getCategoryName } from "@/utils/get-category-name";
 
 const { Title } = Typography;
