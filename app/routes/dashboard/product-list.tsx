@@ -15,11 +15,9 @@ const ProductList = () => {
     loading,
     categoryName,
     searchParams,
-    sortField,
-    sortOrder,
   } = useProductListActions();
 
-  const columns = getProductListColumn({ sortField, sortOrder, navigate });
+  const columns = getProductListColumn();
 
   return (
     <Card

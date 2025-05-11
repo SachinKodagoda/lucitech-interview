@@ -7,36 +7,20 @@ import { useDashboardActions } from "@/hooks/use-dashbord-actions";
 import { getCategoryItems } from "@/utils/get-category-items";
 import { getSelectedCategory } from "@/utils/get-selected-category";
 import SideMenu from "@/ui/side-menu";
-
 const { Sider } = Layout;
 
 const AppLayout = () => {
   const {
     handleLogout,
-    navigateToHome,
     navigate,
-    categoryId,
-    categoryGroup,
-    categories,
     categoriesLoading,
     lastModifiedProduct,
     pagination,
     user,
   } = useDashboardActions();
 
-  const menuItems = getCategoryItems({
-    categories,
-    navigate,
-    navigateToHome,
-    pagination,
-  });
-
-  const selectedKeys = getSelectedCategory({
-    categoryId,
-    categoryGroup,
-    categories,
-    menuItems,
-  });
+  const menuItems = getCategoryItems();
+  const selectedKeys = getSelectedCategory(menuItems);
 
   return (
     <div className="flex h-dvh overflow-hidden">
@@ -57,7 +41,6 @@ const AppLayout = () => {
           handleLogout={handleLogout}
         />
       </Sider>
-
       <div className="flex flex-col gap-4 h-dvh overflow-y-auto w-full ">
         {lastModifiedProduct && (
           <div style={{ marginBottom: "24px" }}>

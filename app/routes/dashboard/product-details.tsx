@@ -1,16 +1,5 @@
-import {
-  Typography,
-  Card,
-  Spin,
-  Button,
-  Descriptions,
-  Divider,
-  Form,
-  message,
-} from "antd";
+import { Typography, Card, Button, Descriptions, Divider, Form } from "antd";
 
-import { updateProductAttributes } from "@/stores/slices/product-slice";
-import type { Product } from "@/types";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoSaveOutline } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
@@ -23,7 +12,7 @@ import Loading from "@/ui/loading";
 
 const { Title, Text } = Typography;
 
-const ProductDetail: React.FC = () => {
+const ProductDetail = () => {
   const {
     navigate,
     categories,

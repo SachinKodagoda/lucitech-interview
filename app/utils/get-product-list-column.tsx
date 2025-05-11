@@ -1,4 +1,4 @@
-import type { Product, sortOrder } from "@/types";
+import type { Product } from "@/types";
 import {
   renderAttributeValue,
   renderAttribute,
@@ -7,20 +7,13 @@ import {
 import { cn } from "@/utils/cn";
 import { FaRegEye } from "react-icons/fa";
 import { Button } from "antd";
-import type { NavigateFunction } from "react-router";
+import { useNavigate } from "react-router";
 import { pills } from "@/elements/pills";
+import { useAppSelector } from "@/hooks";
 
-type props = {
-  sortField: string;
-  sortOrder: sortOrder;
-  navigate: NavigateFunction;
-};
-
-export const getProductListColumn = ({
-  sortField,
-  sortOrder,
-  navigate,
-}: props) => {
+export const getProductListColumn = () => {
+  const navigate = useNavigate();
+  const { sortField, sortOrder } = useAppSelector((state) => state.products);
   const columns = [
     {
       title: "ID",

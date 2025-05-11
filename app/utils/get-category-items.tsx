@@ -1,24 +1,14 @@
 import { useMemo } from "react";
-import type { ButtonEvent, Category, categoryList } from "@/types";
-import type { NavigateFunction } from "react-router";
+import type { ButtonEvent, categoryList } from "@/types";
+import { useNavigate } from "react-router";
 import { FaArrowRight } from "react-icons/fa";
+import { useAppSelector } from "@/hooks";
 
-interface props {
-  categories: Category[];
-  navigate: NavigateFunction;
-  navigateToHome: (e: ButtonEvent, id: string) => void;
-  pagination: {
-    page: number;
-    page_size: number;
-  };
-}
+export const getCategoryItems = () => {
+  const navigate = useNavigate();
+  const { pagination } = useAppSelector((state) => state.products);
+  const { categories } = useAppSelector((state) => state.categories);
 
-export const getCategoryItems = ({
-  categories,
-  navigate,
-  navigateToHome,
-  pagination,
-}: props) => {
   const menuItems = useMemo(() => {
     return categories.reduce((acc, curr, index) => {
       const existingGroup = acc.find(
@@ -48,7 +38,12 @@ export const getCategoryItems = ({
             <div className="flex items-center gap-2">
               <FaArrowRight />
               <button
-                onClick={(e) => navigateToHome(e, `${curr.id}`)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(
+                    `/dashboard?category_group=${curr.id}&page_size=${pagination.page_size}&page=${pagination.page}`
+                  );
+                }}
                 type="button"
                 className="cursor-pointer"
               >
@@ -61,13 +56,7 @@ export const getCategoryItems = ({
       }
       return acc;
     }, [] as categoryList[]);
-  }, [
-    categories,
-    pagination.page,
-    pagination.page_size,
-    navigate,
-    navigateToHome,
-  ]);
+  }, [categories, pagination.page, pagination.page_size, navigate]);
 
   return menuItems;
 };

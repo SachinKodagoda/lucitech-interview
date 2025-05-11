@@ -1,22 +1,11 @@
-import type {
-  Category,
-  categoryGroup,
-  categoryId,
-  categoryList,
-} from "@/types";
+import { useParams } from "@/hooks/use-params-data";
+import type { categoryList } from "@/types";
+import { useAppSelector } from "@/hooks";
 
-interface props {
-  categoryId: categoryId;
-  categoryGroup: categoryGroup;
-  categories: Category[];
-  menuItems: categoryList[];
-}
-export const getSelectedCategory = ({
-  categoryId,
-  categoryGroup,
-  categories,
-  menuItems,
-}: props): string[] => {
+export const getSelectedCategory = (menuItems: categoryList[]): string[] => {
+  const { categoryId, categoryGroup } = useParams();
+  const { categories } = useAppSelector((state) => state.categories);
+
   if (categoryId) {
     // Find the menu item that corresponds to this category ID
     const selectedItem = categories.find(

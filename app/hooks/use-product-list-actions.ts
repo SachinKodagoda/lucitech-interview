@@ -13,21 +13,19 @@ export const useProductListActions = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
   const { categoryId, pageSize, categoryGroup, page } = useParams();
-
+  const { categories } = useAppSelector((state) => state.categories);
   const { products, loading, pagination, sortField, sortOrder } =
     useAppSelector((state) => state.products);
-
-  const { categories } = useAppSelector((state) => state.categories);
 
   const categoryName = getCategoryName({
     categoryId,
     categoryGroup,
     categories,
   });
+
+  // Fetch products when component mounts or when pagination/sort changes
   useEffect(() => {
-    // Fetch products when component mounts or when pagination/sort changes
     dispatch(
       fetchProducts({
         page: page || pagination.page,
@@ -60,14 +58,9 @@ export const useProductListActions = () => {
     dispatch,
     navigate,
     products,
-    categoryId,
-    categoryGroup,
-    categories,
     pagination,
     loading,
     categoryName,
     searchParams,
-    sortField,
-    sortOrder,
   };
 };
