@@ -15,7 +15,6 @@ export default function PerPageItems() {
       <Select
         value={pagination.page_size}
         onChange={(value) => {
-          dispatch(setPageSize(value));
           const params = new URLSearchParams(searchParams);
           params.set("page_size", value.toString());
           params.set("page", "1");

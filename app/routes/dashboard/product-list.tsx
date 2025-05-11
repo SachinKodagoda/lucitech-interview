@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Table, Card, Typography, Spin, Button } from "antd";
-import { EyeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 
@@ -9,13 +8,21 @@ import type { Product } from "@/types";
 import {
   fetchProducts,
   setPage,
+  setPageSize,
   setSortField,
   setSortOrder,
 } from "@/stores/slices/product-slice";
 import PerPageItems from "@/widgets/per-page-items";
-import { renderAttributeValue } from "@/utils/render-attributes";
+import {
+  renderAttribute,
+  renderAttributeValue,
+  renderValue,
+} from "@/utils/render-attributes";
 import { useParams } from "@/hooks/use-params-data";
 import { getCategoryName } from "@/utils/get-category-name";
+import { FaRegEye } from "react-icons/fa";
+import { cn } from "@/utils/cn";
+import { pills } from "@/elements/pills";
 
 const { Title } = Typography;
 
@@ -48,12 +55,12 @@ const ProductList: React.FC = () => {
         sortOrder: sortOrder || undefined,
       })
     );
-    // if (pageSize) {
-    //   dispatch(setPageSize(pageSize));
-    // }
-    // if (page) {
-    //   dispatch(setPage(page));
-    // }
+    if (pageSize) {
+      dispatch(setPageSize(pageSize));
+    }
+    if (page) {
+      dispatch(setPage(page));
+    }
   }, [
     page,
     pageSize,
@@ -85,22 +92,33 @@ const ProductList: React.FC = () => {
     {
       title: "Price",
       key: "price",
-      render: (text: string, record: Product) =>
+      render: (_: string, record: Product) =>
         renderAttributeValue(record, "price"),
     },
     {
       title: "In Stock",
       key: "in_stock",
-      render: (text: string, record: Product) =>
-        renderAttributeValue(record, "in_stock"),
+      render: (_: string, record: Product) => {
+        const filtered = renderAttribute(record, "in_stock");
+        return (
+          <div
+            className={cn(
+              filtered?.value ? pills() : pills({ intent: "red" }),
+              "min-w-16"
+            )}
+          >
+            {renderValue(filtered)}
+          </div>
+        );
+      },
     },
     {
       title: "Actions",
       key: "actions",
-      render: (text: string, record: Product) => (
+      render: (_: string, record: Product) => (
         <Button
           type="primary"
-          icon={<EyeOutlined />}
+          icon={<FaRegEye />}
           onClick={() => navigate(`/dashboard/products/${record.id}`)}
         >
           View
@@ -110,9 +128,20 @@ const ProductList: React.FC = () => {
   ];
 
   return (
-    <Card>
+    <Card
+      style={{
+        border: "2px solid rgba(0,0,0,0.1)",
+      }}
+    >
       <div className="mb-6 flex justify-between">
-        <Title level={3}>{categoryName}</Title>
+        <Title
+          level={3}
+          style={{
+            color: "#013b8e",
+          }}
+        >
+          {categoryName}
+        </Title>
         <PerPageItems />
       </div>
       {loading ? (
@@ -124,6 +153,7 @@ const ProductList: React.FC = () => {
           dataSource={products}
           columns={columns}
           rowKey="id"
+          bordered
           pagination={{
             current: pagination.page,
             pageSize: pagination.page_size,

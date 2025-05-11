@@ -1,7 +1,8 @@
 import { Card, Tag, Typography, Button } from "antd";
-import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import type { AttributeValue, Product } from "@/types";
+import { FaRegEye } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
 
 const { Title, Text } = Typography;
 
@@ -45,14 +46,14 @@ const LastModifiedProduct: React.FC<LastModifiedProductProps> = ({
     <Card
       title={
         <div style={{ display: "flex", alignItems: "center" }}>
-          <EditOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+          <MdEdit style={{ marginRight: "8px", color: "#1890ff" }} />
           <span>Last Modified Product</span>
         </div>
       }
       extra={
         <Button
           type="primary"
-          icon={<EyeOutlined />}
+          icon={<FaRegEye />}
           onClick={() => navigate(`/dashboard/products/${product.id}`)}
         >
           View Details

@@ -39,47 +39,38 @@ const AppLayout = () => {
   });
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Layout>
-        <Sider
-          width={250}
-          style={{
-            background: "#fff",
-            boxShadow: "2px 0 8px rgba(0,0,0,0.1)",
-          }}
-        >
-          <SideMenu
-            categoriesLoading={categoriesLoading}
-            selectedKeys={selectedKeys}
-            pagination={pagination}
-            navigate={navigate}
-            menuItems={menuItems}
-            user={user}
-            handleLogout={handleLogout}
-          />
-        </Sider>
+    <div className="flex h-dvh overflow-hidden">
+      <Sider
+        width={275}
+        style={{
+          background: "#fff",
+          borderRight: "2px solid rgba(0,0,0,0.1)",
+          // boxShadow: "2px 0 8px rgba(0,0,0,0.1)",
+        }}
+      >
+        <SideMenu
+          categoriesLoading={categoriesLoading}
+          selectedKeys={selectedKeys}
+          pagination={pagination}
+          navigate={navigate}
+          menuItems={menuItems}
+          user={user}
+          handleLogout={handleLogout}
+        />
+      </Sider>
 
-        <Layout style={{ padding: "24px" }}>
-          {lastModifiedProduct && (
-            <div style={{ marginBottom: "24px" }}>
-              <LastModifiedProduct product={lastModifiedProduct} />
-            </div>
-          )}
+      <div className="flex flex-col gap-4 h-dvh overflow-y-auto w-full">
+        {lastModifiedProduct && (
+          <div style={{ marginBottom: "24px" }}>
+            <LastModifiedProduct product={lastModifiedProduct} />
+          </div>
+        )}
 
-          <Content
-            style={{
-              background: "#fff",
-              padding: "24px",
-              margin: 0,
-              borderRadius: "4px",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <Outlet />
-          </Content>
-        </Layout>
-      </Layout>
-    </Layout>
+        <div className="p-6">
+          <Outlet />
+        </div>
+      </div>
+    </div>
   );
 };
 

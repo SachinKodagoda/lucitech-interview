@@ -48,14 +48,26 @@ export default function App() {
   return (
     <Provider store={store}>
       <ConfigProvider
-        theme={
-          {
-            // token: {
-            //   colorPrimary: "#1890ff",
-            //   borderRadius: 4,
-            // },
-          }
-        }
+        theme={{
+          components: {
+            Table: {
+              borderColor: "rgba(0,0,0,0.15)",
+              headerBg: "#333333",
+              headerColor: "#fff",
+              headerFilterHoverBg: "#333333",
+              headerSplitColor: "#333333",
+              headerSortActiveBg: "#333333",
+              headerSortHoverBg: "#333333",
+              cellPaddingBlock: 10,
+            },
+          },
+          token: {
+            colorPrimary: "#013b8e",
+            colorSuccess: "#378410",
+            colorWarning: "#dc9d1e",
+            colorError: "#a90b0d",
+          },
+        }}
       >
         <Outlet />
       </ConfigProvider>

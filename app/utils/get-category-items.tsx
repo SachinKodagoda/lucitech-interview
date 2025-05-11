@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import type { ButtonEvent, Category, categoryList } from "@/types";
 import type { NavigateFunction } from "react-router";
+import { FaArrowRight } from "react-icons/fa";
 
 interface props {
   categories: Category[];
@@ -26,7 +27,12 @@ export const getCategoryItems = ({
       if (existingGroup) {
         existingGroup.children?.push({
           id: `${curr.id}`,
-          label: curr.name,
+          label: (
+            <div className="flex items-center gap-2">
+              <FaArrowRight />
+              {curr.name}
+            </div>
+          ),
           key: `${index}-${curr.id}`,
 
           onClick: () =>
@@ -39,14 +45,17 @@ export const getCategoryItems = ({
           key: `${index}-${curr.id}`,
           id: `${curr.id}`,
           label: (
-            <button
-              onClick={(e) => navigateToHome(e, `${curr.id}`)}
-              type="button"
-            >
-              {curr.name}
-            </button>
+            <div className="flex items-center gap-2">
+              <FaArrowRight />
+              <button
+                onClick={(e) => navigateToHome(e, `${curr.id}`)}
+                type="button"
+                className="cursor-pointer"
+              >
+                {curr.name}
+              </button>
+            </div>
           ),
-          // icon: <AppstoreOutlined />,
           children: [],
         });
       }

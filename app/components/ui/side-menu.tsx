@@ -1,10 +1,10 @@
 import type { categoryList, pagination, User } from "@/types/index";
-import {
-  LogoutOutlined,
-  AppstoreOutlined,
-  ShoppingOutlined,
-} from "@ant-design/icons";
+
 import { Button, Menu, Spin, Typography } from "antd";
+import { BiSolidCategory } from "react-icons/bi";
+import { FaBagShopping } from "react-icons/fa6";
+import { IoLogOutOutline } from "react-icons/io5";
+import { VscDashboard } from "react-icons/vsc";
 import type { NavigateFunction } from "react-router";
 
 interface props {
@@ -29,7 +29,8 @@ export default function SideMenu({
   return (
     <div className="flex h-full flex-col justify-between gap-2">
       <div>
-        <div className="flex min-h-[60px] items-center justify-center border-b border-gray-500/50 pr-6 font-bold">
+        <div className="text-lg uppercase flex gap-1 min-h-[60px] items-center justify-center border-b border-gray-500/50 pr-6 font-bold border-dashed">
+          <VscDashboard className="w-6 h-6" />
           Home24 BXP
         </div>
 
@@ -52,7 +53,7 @@ export default function SideMenu({
             items={[
               {
                 key: "all-products",
-                icon: <ShoppingOutlined />,
+                icon: <FaBagShopping />,
                 label: "All Products",
                 onClick: () =>
                   navigate(
@@ -61,7 +62,7 @@ export default function SideMenu({
               },
               {
                 key: "categories",
-                icon: <AppstoreOutlined />,
+                icon: <BiSolidCategory />,
                 label: "Categories",
                 children: menuItems,
               },
@@ -69,17 +70,13 @@ export default function SideMenu({
           />
         )}
       </div>
-      <div className="flex flex-col items-center p-6">
-        {user && (
-          <Typography.Text style={{ marginRight: "16px" }}>
-            {user.email}
-          </Typography.Text>
-        )}
+
+      <div className="flex flex-col items-center p-6 gap-2">
+        {user && <Typography.Text>{user.email}</Typography.Text>}
         <Button
-          icon={<LogoutOutlined />}
+          icon={<IoLogOutOutline />}
           onClick={handleLogout}
-          type="primary"
-          danger
+          variant="outlined"
         >
           Logout
         </Button>

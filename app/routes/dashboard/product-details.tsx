@@ -19,18 +19,15 @@ import {
 } from "antd";
 
 import {
-  ArrowLeftOutlined,
-  SaveOutlined,
-  EditOutlined,
-} from "@ant-design/icons";
-
-import {
   fetchProductById,
   updateProductAttributes,
   clearCurrentProduct,
 } from "@/stores/slices/product-slice";
 import type { AttributeValue, Product } from "@/types";
 import { useAppDispatch, useAppSelector } from "@/hooks";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { IoSaveOutline } from "react-icons/io5";
+import { CiEdit } from "react-icons/ci";
 
 const { Title, Text } = Typography;
 
@@ -237,7 +234,7 @@ const ProductDetail: React.FC = () => {
         >
           <div style={{ display: "flex", alignItems: "center" }}>
             <Button
-              icon={<ArrowLeftOutlined />}
+              icon={<FaArrowLeftLong />}
               onClick={() =>
                 navigate(
                   `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
@@ -256,7 +253,7 @@ const ProductDetail: React.FC = () => {
             {isEditing ? (
               <Button
                 type="primary"
-                icon={<SaveOutlined />}
+                icon={<IoSaveOutline />}
                 onClick={handleSave}
               >
                 Save Changes
@@ -264,7 +261,7 @@ const ProductDetail: React.FC = () => {
             ) : (
               <Button
                 type="primary"
-                icon={<EditOutlined />}
+                icon={<CiEdit />}
                 onClick={() => setIsEditing(true)}
               >
                 Edit Attributes
