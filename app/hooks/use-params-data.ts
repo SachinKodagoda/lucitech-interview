@@ -1,4 +1,3 @@
-"use client";
 import { useSearchParams } from "react-router";
 
 const getStringConverted = (value: string | null): null | number => {

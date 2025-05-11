@@ -1,4 +1,3 @@
-"use client";
 import { useEffect } from "react";
 import type { FormProps } from "antd";
 import { Button, Checkbox, Form, Input, message } from "antd";
