@@ -10,7 +10,6 @@ app
 ├── styles
 ├── types
 ├── utils
-├── root.tsx
 ├── stores
 │   ├── slices
 │   └── index.tsx
@@ -24,7 +23,8 @@ app
 │   │   └── product-list.tsx
 │   ├── not-found.tsx
 │   └── private-route.tsx
-└── routes.tsx
+├── routes.tsx
+└── root.tsx
 ```
 
 ## Features
