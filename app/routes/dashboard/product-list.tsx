@@ -1,99 +1,72 @@
 import React, { useEffect } from "react";
-import { Table, Card, Typography, Select, Spin, Button } from "antd";
+import { Table, Card, Typography, Spin, Button } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
-import { useNavigate, useSearchParams } from "react-router";
+import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 
 import type { Product } from "@/types";
 import {
   fetchProducts,
   setPage,
-  setPageSize,
   setSortField,
   setSortOrder,
 } from "@/stores/slices/product-slice";
+import PerPageItems from "@/widgets/per-page-items";
+import { renderAttributeValue } from "@/utils/render-attributes";
+import { useParams } from "@/hooks/use-params";
+import { getCategoryName } from "@/utils/get-category-name";
 
 const { Title } = Typography;
-const { Option } = Select;
 
 const ProductList: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const categoryId = searchParams.get("category_id")
-    ? parseInt(searchParams.get("category_id")!)
-    : undefined;
 
-  const page_size = searchParams.get("page_size")
-    ? parseInt(searchParams.get("page_size")!)
-    : undefined;
-
-  const categoryGroup = searchParams.get("category_group")
-    ? parseInt(searchParams.get("category_group")!)
-    : undefined;
-
-  const page = searchParams.get("page")
-    ? parseInt(searchParams.get("page")!)
-    : undefined;
+  const { categoryId, pageSize, categoryGroup, page } = useParams();
 
   const { products, loading, pagination, sortField, sortOrder } =
     useAppSelector((state) => state.products);
+
   const { categories } = useAppSelector((state) => state.categories);
 
-  // Get category name for display
-  const categoryName =
-    categoryId || categoryGroup
-      ? categories.find(
-          (cat) =>
-            `${cat.id}` === `${categoryId}` ||
-            `${cat.id}` === `${categoryGroup}`
-        )?.name || "Unknown Category"
-      : "All Products";
+  const categoryName = getCategoryName({
+    categoryId,
+    categoryGroup,
+    categories,
+  });
 
   useEffect(() => {
     // Fetch products when component mounts or when pagination/sort changes
     dispatch(
       fetchProducts({
-        page: pagination.page,
-        page_size: pagination.page_size,
+        page: page || pagination.page,
+        page_size: pageSize || pagination.page_size,
         category_id: categoryId,
         category_group: categoryGroup,
         sortField,
         sortOrder: sortOrder || undefined,
-      })
+      }),
     );
+    // if (pageSize) {
+    //   dispatch(setPageSize(pageSize));
+    // }
+    // if (page) {
+    //   dispatch(setPage(page));
+    // }
   }, [
-    dispatch,
-    // pagination.page,
-    // pagination.page_size,
-    page_size,
     page,
+    pageSize,
     categoryId,
     categoryGroup,
     sortField,
     sortOrder,
+    dispatch,
   ]);
 
   const handleTableChange = (pagination: any, filters: any, sorter: any) => {
     if (sorter.field) {
       dispatch(setSortField(sorter.field));
       dispatch(setSortOrder(sorter.order));
-    }
-  };
-
-  const renderAttributeValue = (product: Product, code: string) => {
-    const attribute = product.attributes.find((attr) => attr.code === code);
-    if (!attribute) return "-";
-
-    switch (attribute.type) {
-      case "boolean":
-        return attribute.value ? "Yes" : "No";
-      case "tags":
-        return Array.isArray(attribute.value)
-          ? attribute.value.join(", ")
-          : attribute.value;
-      default:
-        return String(attribute.value);
     }
   };
 
@@ -142,40 +115,12 @@ const ProductList: React.FC = () => {
 
   return (
     <Card>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "24px",
-        }}
-      >
+      <div className="mb-6 flex justify-between">
         <Title level={3}>{categoryName}</Title>
-
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <span style={{ marginRight: "8px" }}>Items per page: </span>
-          <Select
-            value={pagination.page_size}
-            onChange={(value) => {
-              dispatch(setPageSize(value));
-              const params = new URLSearchParams(searchParams);
-              params.set("page_size", value.toString());
-              params.set("page", "1");
-              navigate(`?${params.toString()}`);
-            }}
-            style={{ width: 120 }}
-          >
-            <Option value={5}>5</Option>
-            <Option value={10}>10</Option>
-            <Option value={20}>20</Option>
-            <Option value={50}>50</Option>
-          </Select>
-        </div>
+        <PerPageItems />
       </div>
-
       {loading ? (
-        <div
-          style={{ display: "flex", justifyContent: "center", padding: "40px" }}
-        >
+        <div className="flex justify-center p-10">
           <Spin size="large" />
         </div>
       ) : (
