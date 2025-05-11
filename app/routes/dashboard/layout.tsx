@@ -8,7 +8,7 @@ import { getCategoryItems } from "@/utils/get-category-items";
 import { getSelectedCategory } from "@/utils/get-selected-category";
 import SideMenu from "@/ui/side-menu";
 
-const { Content, Sider } = Layout;
+const { Sider } = Layout;
 
 const AppLayout = () => {
   const {
@@ -45,7 +45,6 @@ const AppLayout = () => {
         style={{
           background: "#fff",
           borderRight: "2px solid rgba(0,0,0,0.1)",
-          // boxShadow: "2px 0 8px rgba(0,0,0,0.1)",
         }}
       >
         <SideMenu

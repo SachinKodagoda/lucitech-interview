@@ -5,7 +5,6 @@ import { useNavigate, useSearchParams } from "react-router";
 const { Option } = Select;
 
 export default function PerPageItems() {
-  const dispatch = useAppDispatch();
   const { pagination } = useAppSelector((state) => state.products);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
