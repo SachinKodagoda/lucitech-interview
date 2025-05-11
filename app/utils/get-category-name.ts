@@ -1,8 +1,8 @@
-import type { Category } from "@/types";
+import type { Category, categoryGroup, categoryId } from "@/types";
 
 type props = {
-  categoryId?: number;
-  categoryGroup?: number;
+  categoryId: categoryId;
+  categoryGroup: categoryGroup;
   categories: Category[];
 };
 export const getCategoryName = ({

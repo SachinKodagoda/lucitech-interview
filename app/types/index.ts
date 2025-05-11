@@ -1,4 +1,7 @@
-// Domain models as specified in the requirements
+export type categoryId = number | null;
+
+export type categoryGroup = number | null;
+
 export interface Category {
   id: number;
   parent_id?: number;
@@ -7,7 +10,7 @@ export interface Category {
 
 export interface AttributeValue {
   code: string;
-  value: any;
+  value: string;
   type: "number" | "text" | "url" | "tags" | "boolean";
 }
 
@@ -67,8 +70,11 @@ export interface LoginCredentials {
 export interface PaginationParams {
   page: number;
   page_size: number;
-  category_id?: number;
-  category_group?: number;
+  category_id: categoryId;
+  category_group: categoryGroup;
   sortField?: string;
   sortOrder?: string;
 }
+
+export type DivEvent = React.MouseEvent<HTMLDivElement, MouseEvent>;
+export type ButtonEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>;

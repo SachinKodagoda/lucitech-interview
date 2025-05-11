@@ -18,7 +18,7 @@ const api = axios.create({
 
 // Auth API
 export const login = async (
-  credentials: LoginCredentials,
+  credentials: LoginCredentials
 ): Promise<User | null> => {
   try {
     const response = await api.get("/users", {
@@ -36,7 +36,7 @@ export const login = async (
     }
     return null;
   } catch (error) {
-    console.error("Login error:", error);
+    // console.error("Login error:", error);
     return null;
   }
 };
@@ -49,7 +49,7 @@ export const getCategories = async (): Promise<Category[]> => {
 
 // Products API
 export const getProducts = async (
-  params: PaginationParams,
+  params: PaginationParams
 ): Promise<{
   products: Product[];
   total: number;
@@ -62,7 +62,7 @@ export const getProducts = async (
   const end = page * page_size;
 
   // Build query parameters
-  let queryParams: Record<string, any> = {};
+  const queryParams: Record<string, string | number> = {};
 
   if (category_id) {
     queryParams.category_id = category_id;
