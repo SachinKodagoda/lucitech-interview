@@ -9,7 +9,7 @@ export default function PerPageItems() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   return (
-    <div className="flex items-center">
+    <div className="flex items-center flex-wrap gap-2">
       <span className="mr-2">Items per page: </span>
       <Select
         value={pagination.page_size}

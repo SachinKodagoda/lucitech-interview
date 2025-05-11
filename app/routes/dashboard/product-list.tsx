@@ -1,10 +1,8 @@
-import { Table, Card, Typography, Spin } from "antd";
+import { Table, Spin } from "antd";
 import { setSortField, setSortOrder } from "@/stores/slices/product-slice";
 import PerPageItems from "@/widgets/per-page-items";
 import { useProductListActions } from "@/hooks/use-product-list-actions";
 import { getProductListColumn } from "@/utils/get-product-list-column";
-
-const { Title } = Typography;
 
 const ProductList = () => {
   const {
@@ -20,20 +18,11 @@ const ProductList = () => {
   const columns = getProductListColumn();
 
   return (
-    <Card
-      style={{
-        border: "2px solid rgba(0,0,0,0.1)",
-      }}
-    >
-      <div className="mb-6 flex justify-between">
-        <Title
-          level={3}
-          style={{
-            color: "#013b8e",
-          }}
-        >
+    <div className="p-6 border-2 border-[rgba(0,0,0,0.1)] rounded-md">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
+        <h3 className="text-[#013b8e] text-xl font-bold uppercase">
           {categoryName}
-        </Title>
+        </h3>
         <PerPageItems />
       </div>
       {loading ? (
@@ -71,7 +60,7 @@ const ProductList = () => {
           }}
         />
       )}
-    </Card>
+    </div>
   );
 };
 

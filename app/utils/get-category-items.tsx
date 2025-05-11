@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { ButtonEvent, categoryList } from "@/types";
+import type { categoryList } from "@/types";
 import { useNavigate } from "react-router";
 import { FaArrowRight } from "react-icons/fa";
 import { useAppSelector } from "@/hooks";

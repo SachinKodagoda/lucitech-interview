@@ -1,39 +1,21 @@
-import { Layout } from "antd";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet } from "react-router";
 import LastModifiedProduct from "@/components/widgets/last-modified-product";
 import { getCategoryItems } from "@/utils/get-category-items";
-import { getSelectedCategory } from "@/utils/get-selected-category";
-import SideMenu from "@/ui/side-menu";
 import { useEffect } from "react";
 import { useAppDispatch } from "@/hooks/index";
 import { fetchCategories } from "@/stores/slices/category-slice";
-const { Sider } = Layout;
+import NavigationMenu from "@/ui/navigation-menu";
 
 const AppLayout = () => {
-  const navigate = useNavigate();
   const menuItems = getCategoryItems();
-  const selectedKeys = getSelectedCategory(menuItems);
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
   return (
     <div className="flex h-dvh overflow-hidden">
-      <Sider
-        width={275}
-        style={{
-          background: "#fff",
-          borderRight: "2px solid rgba(0,0,0,0.1)",
-        }}
-      >
-        <SideMenu
-          selectedKeys={selectedKeys}
-          navigate={navigate}
-          menuItems={menuItems}
-        />
-      </Sider>
+      <NavigationMenu menuItems={menuItems} />
       <div className="flex flex-col gap-4 h-dvh overflow-y-auto w-full ">
         <LastModifiedProduct />
         <div className="p-6">

@@ -85,6 +85,7 @@ export interface PaginationParams {
 }
 
 export type DivEvent = React.MouseEvent<HTMLDivElement, MouseEvent>;
+export type DivKeyEvent = React.KeyboardEvent<HTMLDivElement>;
 export type ButtonEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>;
 
 export interface categoryList {
