@@ -45,7 +45,7 @@ const ProductList: React.FC = () => {
         category_group: categoryGroup,
         sortField,
         sortOrder: sortOrder || undefined,
-      }),
+      })
     );
     // if (pageSize) {
     //   dispatch(setPageSize(pageSize));
