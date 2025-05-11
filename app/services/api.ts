@@ -18,7 +18,7 @@ const api = axios.create({
 
 // Auth API
 export const login = async (
-  credentials: LoginCredentials
+  credentials: LoginCredentials,
 ): Promise<User | null> => {
   try {
     const response = await api.get("/users", {
@@ -49,7 +49,7 @@ export const getCategories = async (): Promise<Category[]> => {
 
 // Products API
 export const getProducts = async (
-  params: PaginationParams
+  params: PaginationParams,
 ): Promise<{
   products: Product[];
   total: number;

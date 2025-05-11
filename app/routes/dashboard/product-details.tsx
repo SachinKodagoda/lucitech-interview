@@ -38,7 +38,7 @@ const ProductDetail: React.FC = () => {
   const [form] = Form.useForm();
 
   const { currentProduct, loading, pagination } = useAppSelector(
-    (state) => state.products
+    (state) => state.products,
   );
   const { categories } = useAppSelector((state) => state.categories);
 
@@ -200,7 +200,7 @@ const ProductDetail: React.FC = () => {
           type="primary"
           onClick={() =>
             navigate(
-              `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
+              `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`,
             )
           }
         >
@@ -224,7 +224,7 @@ const ProductDetail: React.FC = () => {
             icon={<ArrowLeftOutlined />}
             onClick={() =>
               navigate(
-                `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
+                `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`,
               )
             }
             style={{ marginRight: "16px" }}

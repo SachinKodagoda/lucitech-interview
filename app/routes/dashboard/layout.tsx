@@ -43,10 +43,10 @@ const AppLayout: React.FC = () => {
     ? parseInt(searchParams.get("category_group")!)
     : undefined;
   const { categories, loading: categoriesLoading } = useAppSelector(
-    (state) => state.categories
+    (state) => state.categories,
   );
   const { lastModifiedProduct, pagination } = useAppSelector(
-    (state) => state.products
+    (state) => state.products,
   );
   const { user } = useAppSelector((state) => state.auth);
 
@@ -64,13 +64,13 @@ const AppLayout: React.FC = () => {
     if (categoryId) {
       // Find the menu item that corresponds to this category ID
       const selectedItem = categories.find(
-        (cat) => `${cat.id}` === `${categoryId}`
+        (cat) => `${cat.id}` === `${categoryId}`,
       );
       if (selectedItem) {
         // Find the index in the menuItems array
         for (const menuItem of menuItems) {
           const childIndex = menuItem.children?.findIndex(
-            (child) => `${child.id}` === `${categoryId}`
+            (child) => `${child.id}` === `${categoryId}`,
           );
           if (
             childIndex !== undefined &&
@@ -87,7 +87,7 @@ const AppLayout: React.FC = () => {
     if (categoryGroup) {
       // Find the menu item for the category group
       const groupItem = menuItems.find(
-        (item) => `${item.id}` === `${categoryGroup}`
+        (item) => `${item.id}` === `${categoryGroup}`,
       );
       if (groupItem) {
         return [groupItem.key];
@@ -108,7 +108,7 @@ const AppLayout: React.FC = () => {
 
         onClick: () =>
           navigate(
-            `/dashboard?category_id=${curr.id}&page_size=${pagination.page_size}&page=${pagination.page}`
+            `/dashboard?category_id=${curr.id}&page_size=${pagination.page_size}&page=${pagination.page}`,
           ),
       });
     } else {
@@ -120,7 +120,7 @@ const AppLayout: React.FC = () => {
             onClick={(e) => {
               e.stopPropagation();
               navigate(
-                `/dashboard?category_group=${curr.id}&page_size=${pagination.page_size}&page=${pagination.page}`
+                `/dashboard?category_group=${curr.id}&page_size=${pagination.page_size}&page=${pagination.page}`,
               );
             }}
           >
@@ -144,9 +144,9 @@ const AppLayout: React.FC = () => {
             boxShadow: "2px 0 8px rgba(0,0,0,0.1)",
           }}
         >
-          <div className="flex flex-col gap-2 justify-between h-full">
+          <div className="flex h-full flex-col justify-between gap-2">
             <div>
-              <div className="pr-6 flex min-h-[60px] justify-center items-center border-b font-bold border-gray-500/50">
+              <div className="flex min-h-[60px] items-center justify-center border-b border-gray-500/50 pr-6 font-bold">
                 Home24 BXP
               </div>
 
@@ -173,7 +173,7 @@ const AppLayout: React.FC = () => {
                       label: "All Products",
                       onClick: () =>
                         navigate(
-                          `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
+                          `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`,
                         ),
                     },
                     {
