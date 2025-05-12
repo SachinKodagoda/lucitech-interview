@@ -9,6 +9,7 @@ export const renderAttributeInput = (attribute: AttributeValue) => {
           name={attribute.code}
           rules={[
             { required: true, message: `Please enter ${attribute.code}` },
+            { type: "number", message: "Please enter a valid number" },
           ]}
         >
           <InputNumber style={{ width: "100%" }} />

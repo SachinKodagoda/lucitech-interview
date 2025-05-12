@@ -54,7 +54,9 @@ export const updateProductAttributes = createAsyncThunk(
   "products/updateAttributes",
   async (product: Product, { rejectWithValue }) => {
     try {
-      return await updateProduct(product);
+      // return await updateProduct(product);
+      const response = await updateProduct(product);
+      return response;
     } catch (error) {
       return rejectWithValue(
         "Failed to update product. Please try again later."

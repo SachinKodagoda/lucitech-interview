@@ -97,3 +97,16 @@ export interface categoryList {
 }
 
 export type NotificationType = "success" | "info" | "warning" | "error";
+
+export type LoginFieldType = {
+  email: string;
+  password: string;
+  remember?: string;
+};
+
+export type ProductFieldType = {
+  price: string;
+  color: string;
+  in_stock: string;
+  tags: string;
+};

@@ -67,7 +67,7 @@
       "attributes": [
         {
           "code": "price",
-          "value": 9994,
+          "value": 99945,
           "type": "number"
         },
         {
@@ -85,7 +85,8 @@
           "value": [
             "smartphone",
             "apple",
-            "5G"
+            "5G",
+            "test"
           ],
           "type": "tags"
         }
@@ -321,7 +322,7 @@
       "attributes": [
         {
           "code": "price",
-          "value": 12.99,
+          "value": 14.99,
           "type": "number"
         },
         {

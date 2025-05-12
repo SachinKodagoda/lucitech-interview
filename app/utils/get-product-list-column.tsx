@@ -10,13 +10,26 @@ import { Button } from "antd";
 import { useNavigate } from "react-router";
 import { pills } from "@/elements/pills";
 import { useAppSelector } from "@/hooks";
+import { RiNumbersFill } from "react-icons/ri";
+import { IoIosPricetags } from "react-icons/io";
+import {
+  MdAddReaction,
+  MdOutlineNumbers,
+  MdOutlinePendingActions,
+} from "react-icons/md";
+import { FaCartShopping } from "react-icons/fa6";
 
 export const getProductListColumn = () => {
   const navigate = useNavigate();
   const { sortField, sortOrder } = useAppSelector((state) => state.products);
   const columns = [
     {
-      title: "ID",
+      title: (
+        <div className="flex items-center gap-1">
+          <MdOutlineNumbers />
+          ID
+        </div>
+      ),
       dataIndex: "id",
       key: "id",
       sorter: true,
@@ -24,20 +37,35 @@ export const getProductListColumn = () => {
       width: 80,
     },
     {
-      title: "Product Name",
+      title: (
+        <div className="flex items-center gap-1">
+          <FaCartShopping />
+          Product Name
+        </div>
+      ),
       dataIndex: "name",
       key: "name",
       sorter: true,
       sortOrder: sortField === "name" ? sortOrder : null,
     },
     {
-      title: "Price",
+      title: (
+        <div className="flex items-center gap-1">
+          <IoIosPricetags />
+          Price
+        </div>
+      ),
       key: "price",
       render: (_: string, record: Product) =>
         renderAttributeValue(record, "price"),
     },
     {
-      title: "In Stock",
+      title: (
+        <div className="flex items-center gap-1">
+          <RiNumbersFill />
+          In Stock
+        </div>
+      ),
       key: "in_stock",
       render: (_: string, record: Product) => {
         const filtered = renderAttribute(record, "in_stock");
@@ -54,7 +82,12 @@ export const getProductListColumn = () => {
       },
     },
     {
-      title: "Actions",
+      title: (
+        <div className="flex items-center gap-1">
+          <MdAddReaction />
+          Actions
+        </div>
+      ),
       key: "actions",
       render: (_: string, record: Product) => (
         <Button

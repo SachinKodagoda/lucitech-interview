@@ -4,6 +4,7 @@ import type { categoryList, DivEvent, DivKeyEvent } from "@/types";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { MdOutlineMenu } from "react-icons/md";
+import { Drawer } from "antd";
 
 export default function NavigationMenu({
   menuItems,
@@ -16,9 +17,14 @@ export default function NavigationMenu({
     e.stopPropagation;
     setShow((prev) => !prev);
   };
+
+  const onClose = () => {
+    setShow(false);
+  };
+
   return (
     <>
-      <div className="h-dvh w-[275px] border-r-2 border-[rgba(0,0,0,0.1)] bg-white hidden md:block">
+      <div className="h-dvh w-[300px] border-r-2 border-[rgba(0,0,0,0.1)] bg-white hidden md:block">
         <SideMenu
           selectedKeys={selectedKeys}
           navigate={navigate}
@@ -32,29 +38,15 @@ export default function NavigationMenu({
       >
         <MdOutlineMenu className="w-6 h-6" />
       </div>
-      {show && (
-        <div
-          className="inset-0 block md:hidden fixed z-50 bg-black/50"
-          onClick={(e) => onToggle(e)}
-          onKeyDown={(e) => onToggle(e)}
-        >
-          <div
-            className="h-dvh w-[275px] border-r-2 border-[rgba(0,0,0,0.1)] bg-white"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            onKeyDown={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <SideMenu
-              selectedKeys={selectedKeys}
-              navigate={navigate}
-              menuItems={menuItems}
-            />
-          </div>
-        </div>
-      )}
+
+      <Drawer closable={false} onClose={onClose} open={show} placement="left">
+        <SideMenu
+          selectedKeys={selectedKeys}
+          navigate={navigate}
+          menuItems={menuItems}
+          onClose={onClose}
+        />
+      </Drawer>
     </>
   );
 }

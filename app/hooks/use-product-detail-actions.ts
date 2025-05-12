@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { useEffect, useState } from "react";
-import { Form, message, notification } from "antd";
-import type { AttributeValue, NotificationType, Product } from "@/types";
+import { Form, message } from "antd";
+import type { AttributeValue, Product } from "@/types";
 import {
   clearCurrentProduct,
   fetchProductById,
@@ -11,23 +11,13 @@ import {
 
 export const useProductDetailActions = () => {
   const { productId } = useParams<{ productId: string }>();
-  const [api, contextHolder] = notification.useNotification();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
-  const openNotificationWithIcon = (type: NotificationType) => {
-    api[type]({
-      message: "Notification Title",
-      description:
-        "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
-    });
-  };
-
   const { currentProduct, loading, pagination } = useAppSelector(
     (state) => state.products
   );
-  const { categories } = useAppSelector((state) => state.categories);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editableAttributes, setEditableAttributes] = useState<
@@ -48,12 +38,10 @@ export const useProductDetailActions = () => {
     // Initialize form with current product attributes
     if (currentProduct && isEditing) {
       setEditableAttributes([...currentProduct.attributes]);
-
       const initialValues: Record<string, string> = {};
       for (const attr of currentProduct.attributes) {
         initialValues[attr.code] = attr.value;
       }
-
       form.setFieldsValue(initialValues);
     }
   }, [currentProduct, isEditing, form]);
@@ -72,22 +60,19 @@ export const useProductDetailActions = () => {
           ...currentProduct,
           attributes: updatedAttributes,
         };
-
         await dispatch(updateProductAttributes(updatedProduct));
         message.success("Product updated successfully");
         setIsEditing(false);
       }
     } catch {
-      openNotificationWithIcon("error");
+      message.error("Something Went Wrong");
     }
   };
 
   return {
     navigate,
-    categories,
     pagination,
     loading,
-    contextHolder,
     setIsEditing,
     currentProduct,
     isEditing,

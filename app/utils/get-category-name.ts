@@ -25,6 +25,7 @@ export const getCategoryName = ({
 
 export const getCategory = ({ categoryId, categories }: Partial<props>) => {
   return (
-    categories?.find((cat) => cat.id === categoryId)?.name || "Unknown Category"
+    categories?.find((cat) => `${cat.id}` === `${categoryId}`)?.name ||
+    "Unknown Category"
   );
 };

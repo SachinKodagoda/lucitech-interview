@@ -4,12 +4,7 @@ import { Button, Checkbox, Form, Input, message } from "antd";
 import { clearError, loginUser } from "@/stores/slices/auth-slice";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-
-type FieldType = {
-  email: string;
-  password: string;
-  remember?: string;
-};
+import type { LoginFieldType } from "@/types/index";
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -17,11 +12,11 @@ const Login: React.FC = () => {
   const { isAuthenticated, isLoading, error } = useAppSelector(
     (state) => state.auth
   );
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+  const onFinish: FormProps<LoginFieldType>["onFinish"] = (values) => {
     dispatch(loginUser(values));
   };
 
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
+  const onFinishFailed: FormProps<LoginFieldType>["onFinishFailed"] = (
     errorInfo
   ) => {
     if (!errorInfo) {
@@ -48,7 +43,7 @@ const Login: React.FC = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item<FieldType>
+          <Form.Item<LoginFieldType>
             label="Email"
             name="email"
             rules={[
@@ -59,7 +54,7 @@ const Login: React.FC = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item<FieldType>
+          <Form.Item<LoginFieldType>
             label="Password"
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
@@ -67,7 +62,7 @@ const Login: React.FC = () => {
             <Input.Password />
           </Form.Item>
 
-          <Form.Item<FieldType>
+          <Form.Item<LoginFieldType>
             name="remember"
             valuePropName="checked"
             label={null}
