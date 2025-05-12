@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "esModuleInterop": true
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+}

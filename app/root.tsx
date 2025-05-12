@@ -11,7 +11,9 @@ import type { Route } from "./+types/root";
 import "@/styles/global.css";
 import { Provider } from "react-redux";
 import { store } from "@/stores";
-import { ConfigProvider } from "antd";
+import { StyleProvider } from "@ant-design/cssinjs";
+import "@/styles/antd.min.css";
+// import "@ant-design/v5-patch-for-react-19";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -32,7 +34,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
+        {/* <Meta /> */}
         <Links />
       </head>
       <body>
@@ -46,32 +48,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <ConfigProvider
-        theme={{
-          components: {
-            Table: {
-              borderColor: "rgba(0,0,0,0.15)",
-              headerBg: "#333333",
-              headerColor: "#fff",
-              headerFilterHoverBg: "#333333",
-              headerSplitColor: "#333333",
-              headerSortActiveBg: "#333333",
-              headerSortHoverBg: "#333333",
-              cellPaddingBlock: 10,
-            },
-          },
-          token: {
-            colorPrimary: "#013b8e",
-            colorSuccess: "#378410",
-            colorWarning: "#dc9d1e",
-            colorError: "#a90b0d",
-          },
-        }}
-      >
+    <StyleProvider hashPriority="high">
+      <Provider store={store}>
         <Outlet />
-      </ConfigProvider>
-    </Provider>
+      </Provider>
+    </StyleProvider>
   );
 }
 
