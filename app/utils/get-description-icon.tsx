@@ -37,6 +37,13 @@ export const getDescriptionIcon = (label: string) => {
           In Stock
         </div>
       );
+    case "tags":
+      return (
+        <div className="flex items-center gap-1 uppercase font-medium">
+          <RiNumbersFill />
+          Tags
+        </div>
+      );
     default:
       return (
         <div className="flex items-center gap-1 uppercase font-medium">

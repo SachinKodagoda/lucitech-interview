@@ -10,6 +10,7 @@ export interface Category {
   name: string;
 }
 
+export type labels = "price" | "color" | "specs_url" | "in_stock" | "tags";
 export type attributes = "number" | "text" | "url" | "tags" | "boolean";
 
 export interface AttributeValue {

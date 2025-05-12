@@ -7,13 +7,14 @@ import type {
   PaginationParams,
 } from "@/types";
 
-const API_URL = "http://localhost:3001";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
   },
+  // withCredentials: true,
 });
 
 // Auth API
@@ -21,7 +22,7 @@ export const login = async (
   credentials: LoginCredentials
 ): Promise<User | null> => {
   try {
-    const response = await api.get("/users", {
+    const response = await api.get("/api/users", {
       params: {
         email: credentials.email,
         password: credentials.password,
@@ -43,7 +44,7 @@ export const login = async (
 
 // Categories API
 export const getCategories = async (): Promise<Category[]> => {
-  const response = await api.get("/categories");
+  const response = await api.get("/api/categories");
   return response.data;
 };
 
@@ -57,11 +58,8 @@ export const getProducts = async (
   const { page, page_size, category_id, sortField, sortOrder, category_group } =
     params;
 
-  // Calculate start and end for pagination
   const start = (page - 1) * page_size;
-  const end = page * page_size;
 
-  // Build query parameters
   const queryParams: Record<string, string | number> = {};
 
   if (category_id) {
@@ -77,13 +75,7 @@ export const getProducts = async (
     queryParams._order = sortOrder || "asc";
   }
 
-  // First, get total count
-  const countResponse = await api.get("/products", {
-    params: { ...queryParams },
-  });
-
-  // Then get paginated data
-  const response = await api.get("/products", {
+  const response = await api.get("/api/products", {
     params: {
       ...queryParams,
       _start: start,
@@ -92,18 +84,18 @@ export const getProducts = async (
   });
 
   return {
-    products: response.data,
-    total: countResponse.data.length || response.data.length,
+    products: response.data.products,
+    total: response.data.total,
   };
 };
 
 export const getProductById = async (id: number): Promise<Product> => {
-  const response = await api.get(`/products/${id}`);
+  const response = await api.get(`/api/products/${id}`);
   return response.data;
 };
 
 export const updateProduct = async (product: Product): Promise<Product> => {
-  const response = await api.put(`/products/${product.id}`, product);
+  const response = await api.put(`/api/products/${product.id}`, product);
   return response.data;
 };
 

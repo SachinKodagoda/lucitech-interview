@@ -12,11 +12,7 @@ import { pills } from "@/elements/pills";
 import { useAppSelector } from "@/hooks";
 import { RiNumbersFill } from "react-icons/ri";
 import { IoIosPricetags } from "react-icons/io";
-import {
-  MdAddReaction,
-  MdOutlineNumbers,
-  MdOutlinePendingActions,
-} from "react-icons/md";
+import { MdAddReaction, MdOutlineNumbers } from "react-icons/md";
 import { FaCartShopping } from "react-icons/fa6";
 
 export const getProductListColumn = () => {
@@ -76,6 +72,59 @@ export const getProductListColumn = () => {
               "min-w-16"
             )}
           >
+            {renderValue(filtered)}
+          </div>
+        );
+      },
+    },
+    {
+      title: (
+        <div className="flex items-center gap-1">
+          <RiNumbersFill />
+          Color
+        </div>
+      ),
+      key: "color",
+      render: (_: string, record: Product) => {
+        const filtered = renderAttribute(record, "color");
+        return <div>{filtered ? filtered?.value : "-"}</div>;
+      },
+    },
+    {
+      title: (
+        <div className="flex items-center gap-1">
+          <RiNumbersFill />
+          URL
+        </div>
+      ),
+      key: "specs_url",
+      render: (_: string, record: Product) => {
+        const filtered = renderAttribute(record, "specs_url");
+        return (
+          <div>
+            {filtered ? (
+              <a href={filtered?.value} target="_blank" rel="noreferrer">
+                link
+              </a>
+            ) : (
+              "-"
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      title: (
+        <div className="flex items-center gap-1">
+          <RiNumbersFill />
+          Tags
+        </div>
+      ),
+      key: "tags",
+      render: (_: string, record: Product) => {
+        const filtered = renderAttribute(record, "tags");
+        return (
+          <div className="flex flex-wrap max-w-15 gap-2">
             {renderValue(filtered)}
           </div>
         );
