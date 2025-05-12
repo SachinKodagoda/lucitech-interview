@@ -8,7 +8,6 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import "@/styles/antd.min.css";
 import "@/styles/global.css";
 import { Provider } from "react-redux";
 import { store } from "@/stores";
