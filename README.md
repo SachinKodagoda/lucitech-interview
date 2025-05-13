@@ -34,7 +34,7 @@ app
 └── root.tsx
 ```
 
-## ✨ Features
+## 🔑 Key Features
 
 - 🚀 **Vite** - ES modules, Hot Module Replacement (HMR), efficient bundling, and code splitting
 - 🧭 **React Router** - Framework Mode for type-safe routing
