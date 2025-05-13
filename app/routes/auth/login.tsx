@@ -5,12 +5,15 @@ import { clearError, loginUser } from "@/stores/slices/auth-slice";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import type { LoginFieldType } from "@/types/index";
+import Beams from "@/ui/beams";
 
 const Login = () => {
   const { message } = App.useApp();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, error } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, error, isLoading } = useAppSelector(
+    (state) => state.auth
+  );
   const onFinish: FormProps<LoginFieldType>["onFinish"] = (values) => {
     dispatch(loginUser(values));
   };
@@ -36,17 +39,34 @@ const Login = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <div className="flex items-center justify-center  h-dvh">
-      <div className="border p-6 pb-0 border-gray-500/50 rounded-md">
+    <div className="flex items-center justify-center  h-dvh relative">
+      <div
+        style={{
+          backgroundImage: `url("/grid.svg")`,
+        }}
+        className="absolute inset-0 opacity-20"
+      />
+      <div className="absolute inset-0 bg-linear-to-b from-zinc-950/0 to-[#fff]" />
+      <div
+        style={{
+          backgroundImage: `url("/man.jpg")`,
+        }}
+        className="absolute inset-0 opacity-10"
+      />
+
+      <Beams />
+
+      <div className="p-10 rounded-md bg-white border-blue-950/60 z-50 shadow-md border-2 relative">
+        <div className="inset-2 border border-dashed absolute border-gray-600/50 rounded-md" />
+        <div className="ribbon bg-cyan-700 text-white">Home24 BXP</div>
         <Form
           name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
           style={{ maxWidth: 600 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
+          layout="vertical"
         >
           <Form.Item<LoginFieldType>
             label="Email"
@@ -76,8 +96,8 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item label={null}>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
+              {isLoading ? "Submitting..." : "Submit"}
             </Button>
           </Form.Item>
         </Form>
