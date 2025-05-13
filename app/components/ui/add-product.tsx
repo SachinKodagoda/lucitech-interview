@@ -58,7 +58,7 @@ export default function AddProduct({ isModalOpen, onCloseModal }: Props) {
         );
         navigate(`/dashboard?page_size=${pagination.page_size}&page=1`);
       });
-    } catch (error) {
+    } catch {
       message.error("Something went wrong, please try again");
     }
   };

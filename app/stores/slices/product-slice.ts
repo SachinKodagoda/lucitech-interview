@@ -33,7 +33,7 @@ export const fetchProducts = createAsyncThunk(
   async (params: PaginationParams, { rejectWithValue }) => {
     try {
       return await getProducts(params);
-    } catch (error) {
+    } catch {
       return rejectWithValue(
         "Failed to fetch products. Please try again later."
       );
@@ -47,7 +47,7 @@ export const fetchProductById = createAsyncThunk(
   async (id: string, { rejectWithValue }) => {
     try {
       return await getProductById(id);
-    } catch (error) {
+    } catch {
       return rejectWithValue(
         `Failed to fetch product with ID ${id}. Please try again later.`
       );
@@ -63,7 +63,7 @@ export const updateProductAttributes = createAsyncThunk(
       return await updateProduct(product);
       // const response = await updateProduct(product);
       // return response;
-    } catch (error) {
+    } catch {
       return rejectWithValue(
         "Failed to update product. Please try again later."
       );
@@ -76,7 +76,7 @@ export const createNewProduct = createAsyncThunk(
   async (product: Partial<Product>, { rejectWithValue }) => {
     try {
       return await createProduct(product);
-    } catch (error) {
+    } catch {
       return rejectWithValue(
         "Failed to update product. Please try again later."
       );

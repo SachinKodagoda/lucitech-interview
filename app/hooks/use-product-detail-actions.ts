@@ -11,6 +11,7 @@ import {
 import { getAllAttributes } from "@/utils/all-product-attrubutes";
 
 export const useProductDetailActions = () => {
+  const { categories } = useAppSelector((state) => state.categories);
   const { message } = App.useApp();
   const { productId } = useParams<{ productId: string }>();
   const dispatch = useAppDispatch();
@@ -41,6 +42,8 @@ export const useProductDetailActions = () => {
           currentProduct.attributes.find((a) => a.code === attr.code)?.value ||
           attr.value;
       }
+      initialValues.category_id = currentProduct.category_id || "";
+      initialValues.name = currentProduct.name || "";
       form.setFieldsValue(initialValues);
     }
   }, [currentProduct, isEditing, form]);
@@ -52,9 +55,16 @@ export const useProductDetailActions = () => {
         ...attr,
         value: values[attr.code],
       }));
+      const filter = categories.find(
+        (category) => category.id === values.category_id
+      );
+      const categoryGroupId = filter?.parent_id || values.category_id;
       if (currentProduct) {
         const updatedProduct: Product = {
           ...currentProduct,
+          name: values.name,
+          category_id: values.category_id,
+          category_group: `${categoryGroupId}`,
           attributes: updatedAttributes || [],
         };
         await dispatch(updateProductAttributes(updatedProduct));

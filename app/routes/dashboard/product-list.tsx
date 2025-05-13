@@ -62,7 +62,7 @@ const ProductList = () => {
               },
               showSizeChanger: false,
             }}
-            onChange={(pagination, filters, sorter) => {
+            onChange={(_pagination, _filters, sorter) => {
               const { field, order } = sorter as unknown as {
                 field: string;
                 order: "ascend" | "descend" | null;

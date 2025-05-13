@@ -25,6 +25,9 @@
       "recommended": true,
       "suspicious": {
         "noConsole": "error"
+      },
+      "correctness": {
+        "noUnusedVariables": "error"
       }
     }
   },

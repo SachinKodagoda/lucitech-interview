@@ -25,7 +25,7 @@ export const loginUser = createAsyncThunk(
         return rejectWithValue("Invalid email or password");
       }
       return user;
-    } catch (error) {
+    } catch {
       return rejectWithValue("Login failed. Please try again later.");
     }
   }
