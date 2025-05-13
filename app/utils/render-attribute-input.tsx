@@ -9,7 +9,11 @@ import { RiNumbersFill } from "react-icons/ri";
 
 export const renderAttributeInput = (
   attribute: Attributes | null,
-  marginBottom = "15px"
+  marginBottom = "15px",
+  tags: {
+    label: string;
+    value: string;
+  }[] = []
 ) => {
   if (!attribute) {
     return null;
@@ -78,7 +82,7 @@ export const renderAttributeInput = (
           }
           style={{ marginBottom: marginBottom }}
         >
-          <Select mode="tags" style={{ width: "100%" }} />
+          <Select mode="tags" style={{ width: "100%" }} options={tags} />
         </Form.Item>
       );
     case "specs_url":

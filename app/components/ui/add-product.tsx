@@ -1,30 +1,29 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/index";
-import { createNewProduct } from "@/stores/slices/product-slice";
+import { createNewProduct, fetchProducts } from "@/stores/slices/product-slice";
 import { getAllAttributes } from "@/utils/all-product-attrubutes";
+import getCategoryList from "@/utils/getCategoryList";
+import getFilteredTags from "@/utils/getFilteredTags";
 import { renderAttributeInput } from "@/utils/render-attribute-input";
 import { App, Button, Form, Input, Modal, Select } from "antd";
-import { Fragment, useMemo } from "react";
+import { Fragment } from "react";
 import { FaCartShopping } from "react-icons/fa6";
-import { MdOutlineNumbers } from "react-icons/md";
+import { MdCategory } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 interface Props {
   onCloseModal: () => void;
   isModalOpen: boolean;
 }
 export default function AddProduct({ isModalOpen, onCloseModal }: Props) {
+  const marginBottom = "24px";
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { message } = App.useApp();
   const [form] = Form.useForm();
   const { categories } = useAppSelector((state) => state.categories);
-  const marginBottom = "24px";
-  const categoryList = useMemo(() => {
-    return categories.map((category) => {
-      return {
-        value: category.id,
-        label: category.name,
-      };
-    });
-  }, [categories]);
+  const { pagination, products } = useAppSelector((state) => state.products);
+  const filteredTags = getFilteredTags(products);
+  const categoryList = getCategoryList(categories);
 
   const onFinish = async () => {
     try {
@@ -32,7 +31,7 @@ export default function AddProduct({ isModalOpen, onCloseModal }: Props) {
         const filter = categories.find(
           (category) => category.id === values.category_id
         );
-        const categoryGroupId = filter?.parent_id || "1";
+        const categoryGroupId = filter?.parent_id || values.category_id;
         dispatch(
           createNewProduct({
             name: values.name,
@@ -50,18 +49,30 @@ export default function AddProduct({ isModalOpen, onCloseModal }: Props) {
 
         message.success("Product updated successfully");
         onCloseModal();
+        form.resetFields();
+        dispatch(
+          fetchProducts({
+            page: 1,
+            page_size: pagination.page_size || 10,
+          })
+        );
+        navigate(`/dashboard?page_size=${pagination.page_size}&page=1`);
       });
     } catch (error) {
       message.error("Something went wrong, please try again");
     }
   };
+
   return (
     <Modal
       title="Add Product"
       closable={{ "aria-label": "Custom Close Button" }}
       open={isModalOpen}
       footer={null}
-      onCancel={onCloseModal}
+      onCancel={() => {
+        onCloseModal();
+        form.resetFields();
+      }}
       centered
     >
       <div className="mt-4">
@@ -69,7 +80,7 @@ export default function AddProduct({ isModalOpen, onCloseModal }: Props) {
           <Form.Item
             label={
               <div className="flex items-center gap-2">
-                <MdOutlineNumbers />
+                <MdCategory />
                 Category
               </div>
             }
@@ -77,10 +88,7 @@ export default function AddProduct({ isModalOpen, onCloseModal }: Props) {
             rules={[{ required: true, message: "Please select a category" }]}
             style={{ marginBottom: marginBottom }}
           >
-            <Select
-              value={categoryList.length > 0 ? categoryList[0].label : ""}
-              options={categoryList}
-            />
+            <Select options={categoryList} />
           </Form.Item>
           <Form.Item
             name="name"
@@ -107,7 +115,8 @@ export default function AddProduct({ isModalOpen, onCloseModal }: Props) {
                     value: "",
                     type: attribute.type,
                   },
-                  marginBottom
+                  marginBottom,
+                  filteredTags
                 )}
               </Fragment>
             );

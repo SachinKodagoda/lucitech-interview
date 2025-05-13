@@ -44,7 +44,7 @@ export const fetchProducts = createAsyncThunk(
 // Create the fetchProductById async thunk
 export const fetchProductById = createAsyncThunk(
   "products/fetchById",
-  async (id: number, { rejectWithValue }) => {
+  async (id: string, { rejectWithValue }) => {
     try {
       return await getProductById(id);
     } catch (error) {
@@ -154,9 +154,7 @@ const productsSlice = createSlice({
         createNewProduct.fulfilled,
         (state, action: PayloadAction<Product>) => {
           state.productCreationLoading = false;
-          state.products.push(action.payload);
           state.lastModifiedProduct = action.payload;
-          state.pagination.total += 1; // Increment total count
         }
       )
       .addCase(createNewProduct.rejected, (state, action) => {

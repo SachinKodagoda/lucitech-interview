@@ -25,7 +25,7 @@ export const useProductDetailActions = () => {
 
   useEffect(() => {
     if (productId) {
-      dispatch(fetchProductById(Number.parseInt(productId)));
+      dispatch(fetchProductById(productId));
     }
     // Cleanup when component unmounts
     return () => {

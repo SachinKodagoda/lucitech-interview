@@ -30,7 +30,7 @@ export interface Attributes {
 }
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   category_id: number;
   category_group: string;
@@ -93,8 +93,8 @@ export interface LoginCredentials {
 export interface PaginationParams {
   page: number;
   page_size: number;
-  category_id: categoryId;
-  category_group: categoryGroup;
+  category_id?: categoryId;
+  category_group?: categoryGroup;
   sortField?: string;
   sortOrder?: string;
 }
