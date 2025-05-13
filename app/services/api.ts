@@ -29,10 +29,8 @@ export const login = async (
       },
     });
 
-    if (response.data && response.data.length > 0) {
-      const user = response.data[0];
-      // In a real application, we would not return the password
-      // But for this mock API, we'll return it
+    if (response.data) {
+      const user = response.data;
       return user;
     }
     return null;

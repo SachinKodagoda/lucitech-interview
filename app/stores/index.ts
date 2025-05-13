@@ -13,7 +13,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        // Ignore these specific action types to avoid warnings
+        // Ignore these action types to avoid warnings
         ignoredActions: ["products/updateAttributes/fulfilled"],
       },
     }),

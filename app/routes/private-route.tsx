@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "@/hooks";
 import { Navigate, Outlet } from "react-router";
 
-const PrivateRoute: React.FC = () => {
+const PrivateRoute = () => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const [shouldNavigate, setShouldNavigate] = useState(!isAuthenticated);

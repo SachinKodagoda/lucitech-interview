@@ -27,7 +27,7 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Document({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>

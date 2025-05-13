@@ -124,7 +124,7 @@ export const getProductListColumn = () => {
       render: (_: string, record: Product) => {
         const filtered = renderAttribute(record, "tags");
         return (
-          <div className="flex flex-wrap max-w-15 gap-2">
+          <div className="flex flex-wrap max-w-[100px] gap-2">
             {renderValue(filtered)}
           </div>
         );
