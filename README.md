@@ -113,4 +113,4 @@ docker run -p 3000:3000 duminda-interview
 
 - This is already deployed on Vercel.
 
-https://lucytech-frontend.vercel.app/
+https://lucytech-nine.vercel.app/
