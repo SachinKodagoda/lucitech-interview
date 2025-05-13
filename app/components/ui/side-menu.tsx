@@ -1,17 +1,18 @@
-import type { categoryList, pagination, User } from "@/types/index";
+import type { categoryList } from "@/types/index";
 
-import { Button, Menu, Typography } from "antd";
+import { Menu } from "antd";
 import { BiSolidCategory } from "react-icons/bi";
 import { FaBagShopping } from "react-icons/fa6";
-import { IoCloseSharp, IoLogOutOutline } from "react-icons/io5";
+import { IoCloseSharp } from "react-icons/io5";
 import { VscDashboard } from "react-icons/vsc";
 import type { NavigateFunction } from "react-router";
 import Loading from "@/components/ui/loading";
 import UserSection from "./user-section";
 import { useAppSelector } from "@/hooks/index";
 import { cn } from "@/utils/cn";
+import LastUpdatedProduct from "@/widgets/last-updated-product";
 
-interface props {
+interface Props {
   selectedKeys: string[];
   navigate: NavigateFunction;
   menuItems: categoryList[];
@@ -23,12 +24,14 @@ export default function SideMenu({
   navigate,
   menuItems,
   onClose,
-}: props) {
+}: Props) {
   const { pagination } = useAppSelector((state) => state.products);
-  const { loading: categoriesLoading } = useAppSelector(
-    (state) => state.categories
-  );
+  const { categoryLoading } = useAppSelector((state) => state.categories);
+
   const onAllProductClick = () => {
+    if (onClose) {
+      onClose();
+    }
     navigate(`/dashboard?page_size=${pagination.page_size}&page=1`);
   };
 
@@ -55,7 +58,7 @@ export default function SideMenu({
             </button>
           )}
         </div>
-        {categoriesLoading ? (
+        {categoryLoading ? (
           <Loading />
         ) : (
           <Menu
@@ -80,7 +83,10 @@ export default function SideMenu({
           />
         )}
       </div>
-      <UserSection />
+      <div>
+        <LastUpdatedProduct />
+        <UserSection />
+      </div>
     </div>
   );
 }

@@ -10,27 +10,39 @@ export interface Category {
   name: string;
 }
 
-export type labels = "price" | "color" | "specs_url" | "in_stock" | "tags";
-export type attributes = "number" | "text" | "url" | "tags" | "boolean";
+export interface ProductForm {
+  [key: string]: attributeValues;
+}
 
-export interface AttributeValue {
-  code: string;
-  value: string;
-  type: attributes;
+export type attributeValues = string | string[] | number | boolean;
+export type attributeCodes =
+  | "price"
+  | "color"
+  | "specs_url"
+  | "in_stock"
+  | "tags";
+export type attributeTypes = "number" | "text" | "url" | "tags" | "boolean";
+
+export interface Attributes {
+  code: attributeCodes;
+  value: attributeValues;
+  type: attributeTypes;
 }
 
 export interface Product {
   id: number;
   name: string;
   category_id: number;
-  attributes: AttributeValue[];
+  attributes: Attributes[];
 }
 
 // Extended interfaces for the application
 export interface User {
-  id: number;
+  id: number | string;
   email: string;
   password: string;
+  name: string;
+  role: "admin" | "user";
 }
 
 export interface AuthState {
@@ -42,7 +54,7 @@ export interface AuthState {
 
 export interface CategoryState {
   categories: Category[];
-  loading: boolean;
+  categoryLoading: boolean;
   error: string | null;
 }
 
@@ -58,7 +70,7 @@ export interface ProductState {
   products: Product[];
   currentProduct: Product | null;
   lastModifiedProduct: Product | null;
-  loading: boolean;
+  productLoading: boolean;
   error: string | null;
   pagination: pagination;
   sortField: string;

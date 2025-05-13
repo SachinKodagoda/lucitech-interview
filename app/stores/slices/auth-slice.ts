@@ -6,6 +6,7 @@ import {
 
 import { login } from "@/services/api";
 import type { AuthState, LoginCredentials, User } from "@/types";
+import { ReactSession } from "react-client-session";
 
 const initialState: AuthState = {
   user: null,
@@ -38,8 +39,15 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       state.error = null;
+      ReactSession.setStoreType("cookie");
+      ReactSession.set("user", null);
     },
     clearError: (state) => {
+      state.error = null;
+    },
+    setUser: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
       state.error = null;
     },
   },
@@ -61,5 +69,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, clearError } = authSlice.actions;
+export const { logout, clearError, setUser } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import type { FormProps } from "antd";
-import { Button, Checkbox, Form, Input, message } from "antd";
+import { App, Button, Checkbox, Form, Input, message } from "antd";
 import { clearError, loginUser } from "@/stores/slices/auth-slice";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import type { LoginFieldType } from "@/types/index";
 
 const Login = () => {
+  const { message } = App.useApp();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, error } = useAppSelector((state) => state.auth);
   const onFinish: FormProps<LoginFieldType>["onFinish"] = (values) => {
     dispatch(loginUser(values));
   };
@@ -21,6 +22,12 @@ const Login = () => {
       dispatch(clearError());
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      message.error("email or password is incorrect, try again");
+    }
+  }, [error, message]);
 
   useEffect(() => {
     if (isAuthenticated) {

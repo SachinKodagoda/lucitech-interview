@@ -15,7 +15,7 @@ export const useProductListActions = () => {
   const [searchParams] = useSearchParams();
   const { categoryId, pageSize, categoryGroup, page } = useParams();
   const { categories } = useAppSelector((state) => state.categories);
-  const { products, loading, pagination, sortField, sortOrder } =
+  const { products, productLoading, pagination, sortField, sortOrder } =
     useAppSelector((state) => state.products);
 
   const categoryName = getCategoryName({
@@ -59,7 +59,7 @@ export const useProductListActions = () => {
     navigate,
     products,
     pagination,
-    loading,
+    productLoading,
     categoryName,
     searchParams,
   };

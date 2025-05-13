@@ -10,7 +10,7 @@ const ProductList = () => {
     navigate,
     products,
     pagination,
-    loading,
+    productLoading,
     categoryName,
     searchParams,
   } = useProductListActions();
@@ -25,7 +25,7 @@ const ProductList = () => {
         </h3>
         <PerPageItems />
       </div>
-      {loading ? (
+      {productLoading ? (
         <div className="flex justify-center p-10">
           <Spin size="large" />
         </div>

@@ -13,6 +13,8 @@ import { Provider } from "react-redux";
 import { store } from "@/stores";
 import { ConfigProvider } from "antd";
 import "@ant-design/v5-patch-for-react-19";
+import { withUserSession } from "@/hooks/authHOC";
+import { App as AntApp } from "antd";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -27,7 +29,7 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-export function Document({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -45,7 +47,17 @@ export function Document({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+function BaseAppContent() {
+  return (
+    <AntApp>
+      <Outlet />
+    </AntApp>
+  );
+}
+
+const AppContentWithUserSession = withUserSession(BaseAppContent);
+
+function AppContent() {
   return (
     <ConfigProvider
       theme={{
@@ -70,10 +82,14 @@ export default function App() {
       }}
     >
       <Provider store={store}>
-        <Outlet />
+        <AppContentWithUserSession />
       </Provider>
     </ConfigProvider>
   );
+}
+
+export default function App() {
+  return <AppContent />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

@@ -12,8 +12,9 @@ import { pills } from "@/elements/pills";
 import { useAppSelector } from "@/hooks";
 import { RiNumbersFill } from "react-icons/ri";
 import { IoIosPricetags } from "react-icons/io";
-import { MdAddReaction, MdOutlineNumbers } from "react-icons/md";
-import { FaCartShopping } from "react-icons/fa6";
+import { MdAddReaction, MdCategory, MdOutlineNumbers } from "react-icons/md";
+import { FaCartShopping, FaLink } from "react-icons/fa6";
+import { IoColorFilter } from "react-icons/io5";
 
 export const getProductListColumn = () => {
   const navigate = useNavigate();
@@ -31,6 +32,24 @@ export const getProductListColumn = () => {
       sorter: true,
       sortOrder: sortField === "id" ? sortOrder : null,
       width: 80,
+    },
+    {
+      title: (
+        <div className="flex items-center gap-1">
+          <MdAddReaction />
+          Actions
+        </div>
+      ),
+      key: "actions",
+      render: (_: string, record: Product) => (
+        <Button
+          type="primary"
+          icon={<FaRegEye />}
+          onClick={() => navigate(`/dashboard/products/${record.id}`)}
+        >
+          View
+        </Button>
+      ),
     },
     {
       title: (
@@ -80,43 +99,33 @@ export const getProductListColumn = () => {
     {
       title: (
         <div className="flex items-center gap-1">
-          <RiNumbersFill />
+          <IoColorFilter />
           Color
         </div>
       ),
       key: "color",
       render: (_: string, record: Product) => {
         const filtered = renderAttribute(record, "color");
-        return <div>{filtered ? filtered?.value : "-"}</div>;
+        return <div>{renderValue(filtered)}</div>;
       },
     },
     {
       title: (
         <div className="flex items-center gap-1">
-          <RiNumbersFill />
+          <FaLink />
           URL
         </div>
       ),
       key: "specs_url",
       render: (_: string, record: Product) => {
         const filtered = renderAttribute(record, "specs_url");
-        return (
-          <div>
-            {filtered ? (
-              <a href={filtered?.value} target="_blank" rel="noreferrer">
-                link
-              </a>
-            ) : (
-              "-"
-            )}
-          </div>
-        );
+        return <div>{renderValue(filtered)}</div>;
       },
     },
     {
       title: (
         <div className="flex items-center gap-1">
-          <RiNumbersFill />
+          <MdCategory />
           Tags
         </div>
       ),
@@ -129,24 +138,6 @@ export const getProductListColumn = () => {
           </div>
         );
       },
-    },
-    {
-      title: (
-        <div className="flex items-center gap-1">
-          <MdAddReaction />
-          Actions
-        </div>
-      ),
-      key: "actions",
-      render: (_: string, record: Product) => (
-        <Button
-          type="primary"
-          icon={<FaRegEye />}
-          onClick={() => navigate(`/dashboard/products/${record.id}`)}
-        >
-          View
-        </Button>
-      ),
     },
   ];
 

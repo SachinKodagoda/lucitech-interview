@@ -2,29 +2,28 @@ import { getSelectedCategory } from "@/utils/get-selected-category";
 import SideMenu from "./side-menu";
 import type { categoryList, DivEvent, DivKeyEvent } from "@/types";
 import { useNavigate } from "react-router";
-import { useState } from "react";
 import { MdOutlineMenu } from "react-icons/md";
 import { Drawer } from "antd";
 
+interface Props {
+  menuItems: categoryList[];
+  onClose: () => void;
+  onToggle: (e: DivEvent | DivKeyEvent) => void;
+  show: boolean;
+}
+
 export default function NavigationMenu({
   menuItems,
-}: { menuItems: categoryList[] }) {
+  onToggle,
+  onClose,
+  show,
+}: Props) {
   const navigate = useNavigate();
   const selectedKeys = getSelectedCategory(menuItems);
-  const [show, setShow] = useState(false);
-
-  const onToggle = (e: DivEvent | DivKeyEvent) => {
-    e.stopPropagation;
-    setShow((prev) => !prev);
-  };
-
-  const onClose = () => {
-    setShow(false);
-  };
 
   return (
     <>
-      <div className="h-dvh w-[300px] border-r-2 border-[rgba(0,0,0,0.1)] bg-white hidden md:block">
+      <div className="overflow-y-auto max-h-dvh w-[300px] border-r-2 border-[rgba(0,0,0,0.1)] bg-white hidden md:block">
         <SideMenu
           selectedKeys={selectedKeys}
           navigate={navigate}

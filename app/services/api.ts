@@ -37,8 +37,7 @@ export const login = async (
       return user;
     }
     return null;
-  } catch (error) {
-    // console.error("Login error:", error);
+  } catch {
     return null;
   }
 };

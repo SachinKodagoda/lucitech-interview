@@ -1,7 +1,14 @@
-import type { AttributeValue } from "@/types";
 import { Checkbox, Form, Input, InputNumber, Select } from "antd";
+import type { Attributes } from "@/types";
 
-export const renderAttributeInput = (attribute: AttributeValue) => {
+interface Props {
+  attribute: Attributes | null;
+}
+
+export const renderAttributeInput = ({ attribute }: Props) => {
+  if (!attribute) {
+    return null;
+  }
   switch (attribute.type) {
     case "number":
       return (
@@ -19,9 +26,7 @@ export const renderAttributeInput = (attribute: AttributeValue) => {
       return (
         <Form.Item
           name={attribute.code}
-          rules={[
-            { required: true, message: `Please enter ${attribute.code}` },
-          ]}
+          rules={[{ type: "string", message: "Please enter valid string" }]}
         >
           <Input />
         </Form.Item>
@@ -30,10 +35,7 @@ export const renderAttributeInput = (attribute: AttributeValue) => {
       return (
         <Form.Item
           name={attribute.code}
-          rules={[
-            { required: true, message: `Please enter ${attribute.code}` },
-            { type: "url", message: "Please enter a valid URL" },
-          ]}
+          rules={[{ type: "url", message: "Please enter a valid URL" }]}
         >
           <Input />
         </Form.Item>

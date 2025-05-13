@@ -4,7 +4,10 @@ import { useNavigate } from "react-router";
 import { FaArrowRight } from "react-icons/fa";
 import { useAppSelector } from "@/hooks";
 
-export const getCategoryItems = () => {
+interface Props {
+  onClose?: () => void;
+}
+export const getCategoryItems = ({ onClose }: Props) => {
   const navigate = useNavigate();
   const { pagination } = useAppSelector((state) => state.products);
   const { categories } = useAppSelector((state) => state.categories);
@@ -25,10 +28,14 @@ export const getCategoryItems = () => {
           ),
           key: `${index}-${curr.id}`,
 
-          onClick: () =>
+          onClick: () => {
+            if (onClose) {
+              onClose();
+            }
             navigate(
               `/dashboard?category_id=${curr.id}&page_size=${pagination.page_size}&page=1`
-            ),
+            );
+          },
         });
       } else {
         acc.push({
@@ -40,6 +47,9 @@ export const getCategoryItems = () => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
+                  if (onClose) {
+                    onClose();
+                  }
                   navigate(
                     `/dashboard?category_group=${curr.id}&page_size=${pagination.page_size}&page=1`
                   );
@@ -56,7 +66,7 @@ export const getCategoryItems = () => {
       }
       return acc;
     }, [] as categoryList[]);
-  }, [categories, pagination.page_size, navigate]);
+  }, [categories, pagination.page_size, navigate, onClose]);
 
   return menuItems;
 };

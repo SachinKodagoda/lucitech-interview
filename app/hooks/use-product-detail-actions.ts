@@ -1,28 +1,27 @@
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { useEffect, useState } from "react";
-import { Form, message } from "antd";
-import type { AttributeValue, Product } from "@/types";
+import { App, Form } from "antd";
+import type { attributeValues, Product } from "@/types";
 import {
   clearCurrentProduct,
   fetchProductById,
   updateProductAttributes,
 } from "@/stores/slices/product-slice";
+import { getAllAttributes } from "@/utils/all-product-attrubutes";
 
 export const useProductDetailActions = () => {
+  const { message } = App.useApp();
   const { productId } = useParams<{ productId: string }>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
-  const { currentProduct, loading, pagination } = useAppSelector(
+  const { currentProduct, productLoading, pagination } = useAppSelector(
     (state) => state.products
   );
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editableAttributes, setEditableAttributes] = useState<
-    AttributeValue[]
-  >([]);
 
   useEffect(() => {
     if (productId) {
@@ -35,12 +34,12 @@ export const useProductDetailActions = () => {
   }, [dispatch, productId]);
 
   useEffect(() => {
-    // Initialize form with current product attributes
     if (currentProduct && isEditing) {
-      setEditableAttributes([...currentProduct.attributes]);
-      const initialValues: Record<string, string> = {};
-      for (const attr of currentProduct.attributes) {
-        initialValues[attr.code] = attr.value;
+      const initialValues: Record<string, attributeValues> = {};
+      for (const attr of getAllAttributes()) {
+        initialValues[attr.code] =
+          currentProduct.attributes.find((a) => a.code === attr.code)?.value ||
+          attr.value;
       }
       form.setFieldsValue(initialValues);
     }
@@ -49,16 +48,14 @@ export const useProductDetailActions = () => {
   const handleSave = async () => {
     try {
       const values = await form.validateFields();
-      // Update attributes with form values
-      const updatedAttributes = editableAttributes.map((attr) => ({
+      const updatedAttributes = getAllAttributes().map((attr) => ({
         ...attr,
         value: values[attr.code],
       }));
-
       if (currentProduct) {
         const updatedProduct: Product = {
           ...currentProduct,
-          attributes: updatedAttributes,
+          attributes: updatedAttributes || [],
         };
         await dispatch(updateProductAttributes(updatedProduct));
         message.success("Product updated successfully");
@@ -72,7 +69,7 @@ export const useProductDetailActions = () => {
   return {
     navigate,
     pagination,
-    loading,
+    productLoading,
     setIsEditing,
     currentProduct,
     isEditing,

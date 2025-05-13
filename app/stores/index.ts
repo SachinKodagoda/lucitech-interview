@@ -10,13 +10,13 @@ export const store = configureStore({
     products: productsReducer,
   },
   // Adding middleware for serializable check, which is a good practice
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore these action types to avoid warnings
-        ignoredActions: ["products/updateAttributes/fulfilled"],
-      },
-    }),
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({
+  //     serializableCheck: {
+  //       // Ignore these action types to avoid warnings
+  //       ignoredActions: ["products/updateAttributes/fulfilled"],
+  //     },
+  //   }),
 });
 
 export type AppDispatch = typeof store.dispatch;

@@ -6,27 +6,31 @@ import { CiEdit } from "react-icons/ci";
 import { useProductDetailActions } from "@/hooks/use-product-detail-actions";
 import { renderValue } from "@/utils/render-attributes";
 
-import { renderAttributeInput } from "@/utils/render-attribute-input";
 import ProductNotFound from "@/ui/product-not-found";
 import Loading from "@/ui/loading";
 import { getDescriptionIcon } from "@/utils/get-description-icon";
-import Description from "@/ui/description";
+import { MdOutlineNumbers } from "react-icons/md";
+import { BiSolidCategory, BiSolidRename } from "react-icons/bi";
+import { getCategory } from "@/utils/get-category-name";
+import { useAppSelector } from "@/hooks/index";
+import EditProduct from "@/ui/edit-product";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const ProductDetail = () => {
   const {
     navigate,
     pagination,
-    loading,
+    productLoading,
     setIsEditing,
     currentProduct,
     isEditing,
     form,
     handleSave,
   } = useProductDetailActions();
+  const { categories } = useAppSelector((state) => state.categories);
 
-  if (loading) {
+  if (productLoading) {
     return <Loading />;
   }
 
@@ -49,9 +53,7 @@ const ProductDetail = () => {
           >
             Back
           </Button>
-          <Title level={3} style={{ margin: 0 }}>
-            {currentProduct.name}
-          </Title>
+          <div className="text-2xl font-semibold"> {currentProduct.name}</div>
         </div>
         <div>
           {isEditing ? (
@@ -73,28 +75,43 @@ const ProductDetail = () => {
           )}
         </div>
       </div>
-      <Description currentProduct={currentProduct} />
-      <Divider orientation="left">Product Attributes</Divider>
       {isEditing ? (
-        <Form form={form} layout="vertical">
-          {currentProduct.attributes.map((attribute, index) => (
-            <div key={`form-${index + 1}`} style={{ marginBottom: "16px" }}>
-              <Form.Item
-                label={
-                  <div className="flex items-center gap-2">
-                    {getDescriptionIcon(attribute.code)}{" "}
-                    <Text type="secondary">({attribute.type})</Text>
-                  </div>
-                }
-                style={{ marginBottom: "0" }}
-              >
-                {renderAttributeInput(attribute)}
-              </Form.Item>
-            </div>
-          ))}
-        </Form>
+        <EditProduct form={form} currentProduct={currentProduct} />
       ) : (
         <Descriptions bordered column={1}>
+          <Descriptions.Item
+            label={
+              <div className="flex items-center gap-1 uppercase font-medium">
+                <MdOutlineNumbers />
+                Product ID
+              </div>
+            }
+          >
+            {currentProduct.id}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={
+              <div className="flex items-center gap-1 uppercase font-medium">
+                <BiSolidRename />
+                Product Name
+              </div>
+            }
+          >
+            {currentProduct.name}
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={
+              <div className="flex items-center gap-1 uppercase font-medium">
+                <BiSolidCategory />
+                Category
+              </div>
+            }
+          >
+            {getCategory({
+              categoryId: currentProduct.category_id,
+              categories,
+            })}
+          </Descriptions.Item>
           {currentProduct.attributes.map((attribute, index) => (
             <Descriptions.Item
               key={`description-${index + 1}`}

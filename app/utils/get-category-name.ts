@@ -1,6 +1,6 @@
 import type { Category, categoryGroup, categoryId } from "@/types";
 
-type props = {
+type Props = {
   categoryId: categoryId;
   categoryGroup: categoryGroup;
   categories: Category[];
@@ -10,7 +10,7 @@ export const getCategoryName = ({
   categoryId,
   categoryGroup,
   categories,
-}: props) => {
+}: Props) => {
   const categoryName =
     categoryId || categoryGroup
       ? categories.find(
@@ -23,7 +23,7 @@ export const getCategoryName = ({
   return categoryName;
 };
 
-export const getCategory = ({ categoryId, categories }: Partial<props>) => {
+export const getCategory = ({ categoryId, categories }: Partial<Props>) => {
   return (
     categories?.find((cat) => `${cat.id}` === `${categoryId}`)?.name ||
     "Unknown Category"

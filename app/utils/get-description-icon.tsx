@@ -1,10 +1,7 @@
 import { FaLink } from "react-icons/fa6";
-import { IoIosPricetags, IoMdColorFill } from "react-icons/io";
-import {
-  IoColorFillSharp,
-  IoColorFilter,
-  IoColorFilterSharp,
-} from "react-icons/io5";
+import { IoIosPricetags } from "react-icons/io";
+import { IoColorFilter } from "react-icons/io5";
+import { MdCategory } from "react-icons/md";
 import { RiNumbersFill } from "react-icons/ri";
 
 export const getDescriptionIcon = (label: string) => {
@@ -40,7 +37,7 @@ export const getDescriptionIcon = (label: string) => {
     case "tags":
       return (
         <div className="flex items-center gap-1 uppercase font-medium">
-          <RiNumbersFill />
+          <MdCategory />
           Tags
         </div>
       );

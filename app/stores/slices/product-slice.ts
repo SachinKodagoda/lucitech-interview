@@ -10,7 +10,7 @@ const initialState: ProductState = {
   products: [],
   currentProduct: null,
   lastModifiedProduct: null,
-  loading: false,
+  productLoading: false,
   error: null,
   pagination: {
     page: 1,
@@ -88,50 +88,53 @@ const productsSlice = createSlice({
     clearCurrentProduct: (state) => {
       state.currentProduct = null;
     },
+    clearLastUpdated: (state) => {
+      state.lastModifiedProduct = null;
+    },
   },
   extraReducers: (builder) => {
     builder
       // Handle fetchProducts
       .addCase(fetchProducts.pending, (state) => {
-        state.loading = true;
+        state.productLoading = true;
         state.error = null;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.loading = false;
+        state.productLoading = false;
         state.products = action.payload.products;
         state.pagination.total = action.payload.total;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
-        state.loading = false;
+        state.productLoading = false;
         state.error = action.payload as string;
       })
 
       // Handle fetchProductById
       .addCase(fetchProductById.pending, (state) => {
-        state.loading = true;
+        state.productLoading = true;
         state.error = null;
       })
       .addCase(
         fetchProductById.fulfilled,
         (state, action: PayloadAction<Product>) => {
-          state.loading = false;
+          state.productLoading = false;
           state.currentProduct = action.payload;
         }
       )
       .addCase(fetchProductById.rejected, (state, action) => {
-        state.loading = false;
+        state.productLoading = false;
         state.error = action.payload as string;
       })
 
       // Handle updateProductAttributes
       .addCase(updateProductAttributes.pending, (state) => {
-        state.loading = true;
+        state.productLoading = true;
         state.error = null;
       })
       .addCase(
         updateProductAttributes.fulfilled,
         (state, action: PayloadAction<Product>) => {
-          state.loading = false;
+          state.productLoading = false;
           state.currentProduct = action.payload;
           state.lastModifiedProduct = action.payload;
 
@@ -145,7 +148,7 @@ const productsSlice = createSlice({
         }
       )
       .addCase(updateProductAttributes.rejected, (state, action) => {
-        state.loading = false;
+        state.productLoading = false;
         state.error = action.payload as string;
       });
   },
@@ -157,6 +160,7 @@ export const {
   setSortField,
   setSortOrder,
   clearCurrentProduct,
+  clearLastUpdated,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;
