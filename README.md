@@ -1,6 +1,13 @@
-# Welcome to React Router!
+# 🚀 React Frontend
 
-A modern, production-ready template for building full-stack React applications using React Router.
+## 📋 Requirements
+
+- Node 18.0.0 or higher (latest LTS version used)
+- npm / yarn / pnpm (yarn 1.22.22 is used)
+- biome is used for formatting and linting (optional)
+- (eslint and prettier not used)
+
+## 📁 Project Structure
 
 ```
 app
@@ -29,31 +36,59 @@ app
 
 ## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- 🚀 Vite for ES modules, Hot Module Replacement (HMR), Bundling, Code Splitting, and more
+- ⚡️ React Router (Framework Mode) for Routing
+- 📦 TypeScript
+- 🎉 TailwindCSS 4.x.x and Ant Design 5.x.x for styling
 
-## Getting Started
+## 🛠️ Setup Instructions
 
-### Installation
+1. Clone the repository:
 
-Install the dependencies:
+```bash
+git clone https://github.com/SachinKodagoda/lucitech-interview.git
+cd lucitech-interview
+```
+
+2. Install dependencies:
 
 ```bash
 npm install
+# or
+yarn install
 ```
 
-### Development
+3. Create a `.env` file (use the `.env.template` as a guide):
 
-Start the development server with HMR:
+```bash
+cp .env.template .env
+```
+
+Following is an example of the `.env` file:
+
+```bash
+VITE_API_URL=https://go-backend-s2eg.onrender.com
+```
+
+4. You can run the backend locally using
+
+```bash
+https://github.com/SachinKodagoda/go-backend
+```
+
+or use the provided API URL in the `.env` file.
+
+If you want to run the backend locally, make sure to set the `VITE_API_URL` in your `.env` file to `http://localhost:8080`.
+
+5. Run the application:
 
 ```bash
 npm run dev
+# or
+yarn dev
 ```
+
+The server will start on http://localhost:5173/
 
 ## Deployment
 
@@ -62,39 +97,8 @@ npm run dev
 To build and run using Docker:
 
 ```bash
-docker build -t my-app .
+docker build -t duminda-interview .
 
 # Run the container
-docker run -p 3000:3000 my-app
+docker run -p 3000:3000 duminda-interview
 ```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
