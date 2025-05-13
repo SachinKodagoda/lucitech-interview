@@ -9,9 +9,7 @@ import type { LoginFieldType } from "@/types/index";
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, isLoading, error } = useAppSelector(
-    (state) => state.auth
-  );
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
   const onFinish: FormProps<LoginFieldType>["onFinish"] = (values) => {
     dispatch(loginUser(values));
   };

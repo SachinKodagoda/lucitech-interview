@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "@/hooks/index";
 import { fetchCategories } from "@/stores/slices/category-slice";
 import NavigationMenu from "@/ui/navigation-menu";
+import { ReactSession } from "react-client-session";
 
 const AppLayout = () => {
   const menuItems = getCategoryItems();
@@ -12,6 +13,13 @@ const AppLayout = () => {
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
+
+  useEffect(() => {
+    const userString = ReactSession.get("user");
+    const user = userString ? JSON.parse(userString) : null;
+    // biome-ignore lint/suspicious/noConsole: <explanation>
+    console.log("user: =-->", user);
+  }, []);
 
   return (
     <div className="flex h-dvh overflow-hidden">

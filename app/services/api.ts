@@ -6,6 +6,7 @@ import type {
   LoginCredentials,
   PaginationParams,
 } from "@/types";
+import { ReactSession } from "react-client-session";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
@@ -31,6 +32,8 @@ export const login = async (
 
     if (response.data) {
       const user = response.data;
+      ReactSession.setStoreType("cookie");
+      ReactSession.set("user", JSON.stringify(user));
       return user;
     }
     return null;

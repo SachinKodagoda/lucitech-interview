@@ -46,8 +46,8 @@ app
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/SachinKodagoda/lucitech-interview.git
-cd lucitech-interview
+git clone https://github.com/SachinKodagoda/lucytech-interview.git
+cd lucytech-interview
 ```
 
 ### 2️⃣ Install dependencies
@@ -113,4 +113,4 @@ docker run -p 3000:3000 duminda-interview
 
 - This is already deployed on Vercel.
 
-https://lucitech-frontend.vercel.app/
+https://lucytech-frontend.vercel.app/
