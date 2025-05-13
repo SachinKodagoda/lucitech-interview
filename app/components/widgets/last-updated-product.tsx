@@ -31,13 +31,13 @@ export default function LastUpdatedProduct() {
           <MdEdit className="text-blue-900" />
         </div>
         <div>
-          <div>
+          <div className="flex items-center gap-2">
             <span className="font-semibold">Product: </span>
             <span>{product.name}</span>
           </div>
-          <div>
+          <div className="flex items-center gap-2">
             <span className="font-semibold">ID: </span>
-            <span>{product.id}</span>
+            <div className="truncate max-w-[150px]">{product.id}ssss</div>
           </div>
           <div>
             {product.attributes.length > 3 &&

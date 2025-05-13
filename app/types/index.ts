@@ -33,6 +33,7 @@ export interface Product {
   id: number;
   name: string;
   category_id: number;
+  category_group: string;
   attributes: Attributes[];
 }
 
@@ -71,6 +72,7 @@ export interface ProductState {
   currentProduct: Product | null;
   lastModifiedProduct: Product | null;
   productLoading: boolean;
+  productCreationLoading: boolean;
   error: string | null;
   pagination: pagination;
   sortField: string;

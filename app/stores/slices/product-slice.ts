@@ -4,13 +4,19 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 import type { ProductState, Product, PaginationParams } from "@/types";
-import { getProducts, getProductById, updateProduct } from "@/services/api";
+import {
+  getProducts,
+  getProductById,
+  updateProduct,
+  createProduct,
+} from "@/services/api";
 
 const initialState: ProductState = {
   products: [],
   currentProduct: null,
   lastModifiedProduct: null,
   productLoading: false,
+  productCreationLoading: false,
   error: null,
   pagination: {
     page: 1,
@@ -54,9 +60,22 @@ export const updateProductAttributes = createAsyncThunk(
   "products/updateAttributes",
   async (product: Product, { rejectWithValue }) => {
     try {
-      // return await updateProduct(product);
-      const response = await updateProduct(product);
-      return response;
+      return await updateProduct(product);
+      // const response = await updateProduct(product);
+      // return response;
+    } catch (error) {
+      return rejectWithValue(
+        "Failed to update product. Please try again later."
+      );
+    }
+  }
+);
+
+export const createNewProduct = createAsyncThunk(
+  "products/create",
+  async (product: Partial<Product>, { rejectWithValue }) => {
+    try {
+      return await createProduct(product);
     } catch (error) {
       return rejectWithValue(
         "Failed to update product. Please try again later."
@@ -123,6 +142,25 @@ const productsSlice = createSlice({
       )
       .addCase(fetchProductById.rejected, (state, action) => {
         state.productLoading = false;
+        state.error = action.payload as string;
+      })
+
+      // Handle createNewProduct
+      .addCase(createNewProduct.pending, (state) => {
+        state.productCreationLoading = true;
+        state.error = null;
+      })
+      .addCase(
+        createNewProduct.fulfilled,
+        (state, action: PayloadAction<Product>) => {
+          state.productCreationLoading = false;
+          state.products.push(action.payload);
+          state.lastModifiedProduct = action.payload;
+          state.pagination.total += 1; // Increment total count
+        }
+      )
+      .addCase(createNewProduct.rejected, (state, action) => {
+        state.productCreationLoading = false;
         state.error = action.payload as string;
       })
 

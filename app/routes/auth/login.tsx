@@ -31,7 +31,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/dashboard?page_size=5&page=1");
+      navigate("/dashboard?page_size=10&page=1");
     }
   }, [isAuthenticated, navigate]);
 

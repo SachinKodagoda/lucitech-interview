@@ -41,12 +41,20 @@ export const renderValue = (attribute: Attributes | null) => {
         </>
       );
     case "specs_url":
-      if (!attribute.value || attribute.value === "") {
+      if (
+        !attribute.value ||
+        attribute.value === "" ||
+        typeof attribute.value !== "string"
+      ) {
         return <span className="text-gray-400">No Url provided</span>;
       }
       return (
         <a
-          href={`${attribute.value}`}
+          href={
+            attribute.value.startsWith("http")
+              ? attribute.value
+              : `https://${attribute.value}`
+          }
           target="_blank"
           rel="noopener noreferrer"
         >

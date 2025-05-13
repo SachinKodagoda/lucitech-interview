@@ -1,8 +1,8 @@
 import type { Product, ProductForm } from "@/types/index";
 import { getAllAttributes } from "@/utils/all-product-attrubutes";
-import { getDescriptionIcon } from "@/utils/get-description-icon";
 import { renderAttributeInput } from "@/utils/render-attribute-input";
 import { Form, type FormInstance } from "antd";
+import { Fragment } from "react/jsx-runtime";
 
 interface Props {
   form: FormInstance<ProductForm>;
@@ -20,30 +20,25 @@ export default function EditProduct({ form, currentProduct }: Props) {
     return null;
   };
   return (
-    <Form form={form} layout="vertical">
-      {getAllAttributes().map((attribute, index) => {
-        return (
-          <div key={`form-${index + 1}`}>
-            <Form.Item
-              label={
-                <div className="flex items-center gap-2">
-                  {getDescriptionIcon(attribute.code)}
-                  <span className="text-gray-500">({attribute.type})</span>
-                </div>
-              }
-              style={{ marginBottom: "0" }}
-            >
-              {renderAttributeInput({
-                attribute: getAttributeValue(attribute.code) || {
-                  code: attribute.code,
-                  value: "",
-                  type: attribute.type,
-                },
-              })}
-            </Form.Item>
-          </div>
-        );
-      })}
-    </Form>
+    <div className="flex items-center justify-center w-full py-4 lg:py-20">
+      <div className="w-full md:w-1/2">
+        <Form form={form} layout="vertical">
+          {getAllAttributes().map((attribute, index) => {
+            return (
+              <Fragment key={`form-${index + 1}`}>
+                {renderAttributeInput(
+                  getAttributeValue(attribute.code) || {
+                    code: attribute.code,
+                    value: "",
+                    type: attribute.type,
+                  },
+                  "24px"
+                )}
+              </Fragment>
+            );
+          })}
+        </Form>
+      </div>
+    </div>
   );
 }

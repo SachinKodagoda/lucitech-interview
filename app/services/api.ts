@@ -99,4 +99,11 @@ export const updateProduct = async (product: Product): Promise<Product> => {
   return response.data;
 };
 
+export const createProduct = async (
+  product: Partial<Product>
+): Promise<Product> => {
+  const response = await api.post("/api/products", product);
+  return response.data;
+};
+
 export default api;
