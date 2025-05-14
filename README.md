@@ -119,3 +119,17 @@ https://lucytech-nine.vercel.app/
 
 user: admin@gmail.com
 pass: lucytech@123
+
+![login](https://github.com/user-attachments/assets/c2710f10-d8e8-42a6-8988-d2a534940370)
+
+![allproduct](https://github.com/user-attachments/assets/a1feeb5b-e48b-48c9-972d-5719a0810c9b)
+
+![view lastupdate](https://github.com/user-attachments/assets/5bf3e468-37af-4355-8267-7f731e08e22e)
+
+![edit](https://github.com/user-attachments/assets/df3666f2-43eb-4483-833f-87f0fa5d36c1)
+
+![add](https://github.com/user-attachments/assets/ce45c86d-ba24-42d6-b588-787c17b3de2f)
+
+
+
+
