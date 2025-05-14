@@ -16,13 +16,19 @@ export const withUserSession = <P extends object>(
 
     useEffect(() => {
       ReactSession.setStoreType("cookie");
-      const userString = ReactSession.get("user");
-      const user = userString ? JSON.parse(userString) : null;
-      if (user) {
-        dispatch(setUser(user));
-      } else if (location.pathname.startsWith("/dashboard")) {
-        navigate("/");
-        return;
+      try {
+        const userString = ReactSession.get("user");
+        const user = userString ? JSON.parse(userString) : null;
+        if (user) {
+          dispatch(setUser(user));
+        } else if (location.pathname.startsWith("/dashboard")) {
+          navigate("/");
+        }
+      } catch {
+        ReactSession.set("user", null); // Reset the invalid session
+        if (location.pathname.startsWith("/dashboard")) {
+          navigate("/");
+        }
       }
     }, [navigate, dispatch, location.pathname]);
 
