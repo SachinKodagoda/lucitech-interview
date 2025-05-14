@@ -13,10 +13,12 @@ export const useProductListActions = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { categoryId, pageSize, categoryGroup, page } = useParams();
+  const { categoryId, pageSize, categoryGroup, page, sort_by, asc } =
+    useParams();
   const { categories } = useAppSelector((state) => state.categories);
-  const { products, productLoading, pagination, sortField, sortOrder } =
-    useAppSelector((state) => state.products);
+  const { products, productLoading, pagination } = useAppSelector(
+    (state) => state.products
+  );
 
   const categoryName = getCategoryName({
     categoryId,
@@ -26,14 +28,17 @@ export const useProductListActions = () => {
 
   // Fetch products when component mounts or when pagination/sort changes
   useEffect(() => {
+    const isAscending = asc === "true" || asc === "1";
+    const sortNewOrder = isAscending ? "asc" : "desc";
+    const sortNewField = sort_by || "id";
     dispatch(
       fetchProducts({
         page: page || pagination.page,
         page_size: pageSize || pagination.page_size,
         category_id: categoryId,
         category_group: categoryGroup,
-        sortField,
-        sortOrder: sortOrder || undefined,
+        sortField: (sortNewField === "id" ? "_id" : sortNewField) || undefined,
+        sortOrder: sortNewOrder || undefined,
       })
     );
     if (pageSize) {
@@ -47,11 +52,11 @@ export const useProductListActions = () => {
     pageSize,
     categoryId,
     categoryGroup,
-    sortField,
-    sortOrder,
     dispatch,
     pagination.page,
     pagination.page_size,
+    sort_by,
+    asc,
   ]);
 
   return {

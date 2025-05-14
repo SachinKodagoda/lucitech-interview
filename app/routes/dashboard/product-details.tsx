@@ -46,7 +46,7 @@ const ProductDetail = () => {
             icon={<FaArrowLeftLong />}
             onClick={() =>
               navigate(
-                `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
+                `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}&sort_by=id&asc=false`
               )
             }
             style={{ marginRight: "16px" }}

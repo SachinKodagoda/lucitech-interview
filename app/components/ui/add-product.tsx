@@ -56,7 +56,9 @@ export default function AddProduct({ isModalOpen, onCloseModal }: Props) {
             page_size: pagination.page_size || 10,
           })
         );
-        navigate(`/dashboard?page_size=${pagination.page_size}&page=1`);
+        navigate(
+          `/dashboard?page_size=${pagination.page_size}&page=1&sort_by=id&asc=false`
+        );
       });
     } catch {
       message.error("Something went wrong, please try again");

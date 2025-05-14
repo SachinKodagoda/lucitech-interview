@@ -34,7 +34,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/dashboard?page_size=10&page=1");
+      navigate("/dashboard?page_size=10&page=1&sort_by=id&asc=false");
     }
   }, [isAuthenticated, navigate]);
 

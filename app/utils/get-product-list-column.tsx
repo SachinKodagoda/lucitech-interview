@@ -15,14 +15,28 @@ import { IoIosPricetags } from "react-icons/io";
 import { MdAddReaction, MdCategory, MdOutlineNumbers } from "react-icons/md";
 import { FaCartShopping, FaLink } from "react-icons/fa6";
 import { IoColorFilter } from "react-icons/io5";
+import { useParams } from "@/hooks/use-params-data";
+import type { sortOrder as sortOrderType } from "@/types";
 
 export const getProductListColumn = () => {
   const navigate = useNavigate();
-  const { sortField, sortOrder } = useAppSelector((state) => state.products);
+  const { sort_by, asc } = useParams();
+  const { pagination } = useAppSelector((state) => state.products);
+  const isAscending = asc === "true" || asc === "1";
+  const sortOrder: sortOrderType = isAscending ? "ascend" : "descend";
+  const sortField = sort_by || "id";
   const columns = [
     {
       title: (
-        <div className="flex items-center gap-1">
+        <div
+          className="flex items-center gap-1"
+          onKeyDown={() => {}}
+          onClick={() => {
+            navigate(
+              `?page_size=${pagination.page_size}&page=${pagination.page}&sort_by=id&asc=${!isAscending}`
+            );
+          }}
+        >
           <MdOutlineNumbers />
           ID
         </div>
@@ -30,7 +44,7 @@ export const getProductListColumn = () => {
       dataIndex: "id",
       key: "id",
       sorter: true,
-      sortOrder: sortField === "id" ? sortOrder : null,
+      sortOrder: sortField === "id" ? sortOrder : undefined,
       width: 80,
     },
     {
@@ -53,7 +67,15 @@ export const getProductListColumn = () => {
     },
     {
       title: (
-        <div className="flex items-center gap-1">
+        <div
+          className="flex items-center gap-1"
+          onKeyDown={() => {}}
+          onClick={() => {
+            navigate(
+              `?page_size=${pagination.page_size}&page=${pagination.page}&sort_by=name&asc=${!isAscending}`
+            );
+          }}
+        >
           <FaCartShopping />
           Product Name
         </div>
@@ -61,7 +83,7 @@ export const getProductListColumn = () => {
       dataIndex: "name",
       key: "name",
       sorter: true,
-      sortOrder: sortField === "name" ? sortOrder : null,
+      sortOrder: sortField === "name" ? sortOrder : undefined,
     },
     {
       title: (

@@ -9,7 +9,7 @@ export default function ProductNotFound() {
   const { pagination } = useAppSelector((state) => state.products);
   const onBackButtonClick = () => {
     navigate(
-      `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}`
+      `/dashboard?page_size=${pagination.page_size}&page=${pagination.page}&sort_by=id&asc=false`
     );
   };
   return (

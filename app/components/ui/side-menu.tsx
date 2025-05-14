@@ -32,7 +32,9 @@ export default function SideMenu({
     if (onClose) {
       onClose();
     }
-    navigate(`/dashboard?page_size=${pagination.page_size}&page=1`);
+    navigate(
+      `/dashboard?page_size=${pagination.page_size}&page=1&sort_by=id&asc=false`
+    );
   };
 
   return (

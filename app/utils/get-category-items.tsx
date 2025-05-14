@@ -33,7 +33,7 @@ export const getCategoryItems = ({ onClose }: Props) => {
               onClose();
             }
             navigate(
-              `/dashboard?category_id=${curr.id}&page_size=${pagination.page_size}&page=1`
+              `/dashboard?category_id=${curr.id}&page_size=${pagination.page_size}&page=1&sort_by=id&asc=false`
             );
           },
         });
@@ -51,7 +51,7 @@ export const getCategoryItems = ({ onClose }: Props) => {
                     onClose();
                   }
                   navigate(
-                    `/dashboard?category_group=${curr.id}&page_size=${pagination.page_size}&page=1`
+                    `/dashboard?category_group=${curr.id}&page_size=${pagination.page_size}&page=1&sort_by=id&asc=false`
                   );
                 }}
                 type="button"
