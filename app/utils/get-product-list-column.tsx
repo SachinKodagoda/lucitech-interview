@@ -20,11 +20,14 @@ import type { sortOrder as sortOrderType } from "@/types";
 
 export const getProductListColumn = () => {
   const navigate = useNavigate();
-  const { sort_by, asc } = useParams();
+  const { sort_by, asc, categoryId, categoryGroup } = useParams();
   const { pagination } = useAppSelector((state) => state.products);
   const isAscending = asc === "true" || asc === "1";
   const sortOrder: sortOrderType = isAscending ? "ascend" : "descend";
   const sortField = sort_by || "id";
+  const cateGroupId = categoryId ? `&category_id=${categoryId}` : "";
+  const cateGroup = categoryGroup ? `&category_group=${categoryGroup}` : "";
+  const groupId = cateGroupId || cateGroup;
   const columns = [
     {
       title: (
@@ -33,7 +36,7 @@ export const getProductListColumn = () => {
           onKeyDown={() => {}}
           onClick={() => {
             navigate(
-              `?page_size=${pagination.page_size}&page=${pagination.page}&sort_by=id&asc=${!isAscending}`
+              `?${groupId}&page_size=${pagination.page_size}&page=${pagination.page}&sort_by=id&asc=${!isAscending}`
             );
           }}
         >
@@ -72,7 +75,7 @@ export const getProductListColumn = () => {
           onKeyDown={() => {}}
           onClick={() => {
             navigate(
-              `?page_size=${pagination.page_size}&page=${pagination.page}&sort_by=name&asc=${!isAscending}`
+              `?${groupId}&page_size=${pagination.page_size}&page=${pagination.page}&sort_by=name&asc=${!isAscending}`
             );
           }}
         >
