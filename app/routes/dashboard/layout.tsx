@@ -24,15 +24,15 @@ const AppLayout = () => {
   }, [dispatch]);
 
   return (
-    <div className="flex h-dvh overflow-hidden">
+    <div className="flex h-svh overflow-hidden">
       <NavigationMenu
         menuItems={menuItems}
         show={show}
         onToggle={onToggle}
         onClose={onClose}
       />
-      <div className="flex flex-col gap-4 h-dvh overflow-y-auto w-full ">
-        <div className="p-6">
+      <div className="flex flex-col gap-4 h-svh overflow-y-auto w-full ">
+        <div className="p-2 md:p-6">
           <Outlet />
         </div>
       </div>

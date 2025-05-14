@@ -23,7 +23,7 @@ export default function NavigationMenu({
 
   return (
     <>
-      <div className="overflow-y-auto max-h-dvh w-[300px] border-r-2 border-[rgba(0,0,0,0.1)] bg-white hidden md:block">
+      <div className="overflow-y-auto max-h-svh w-[300px] border-r-2 border-[rgba(0,0,0,0.1)] bg-white hidden md:block">
         <SideMenu
           selectedKeys={selectedKeys}
           navigate={navigate}
