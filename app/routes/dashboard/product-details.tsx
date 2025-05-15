@@ -42,8 +42,8 @@ const ProductDetail = () => {
 
   return (
     <div className="p-4 md:p-6 border-2 border-[rgba(0,0,0,0.1)] rounded-md flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-y-4 gap-x-2 border-b-2 pb-6 border-gray-200 border-dashed">
-        <div className="flex flex-wrap items-center justify-between gap-y-4 gap-x-2">
+      <div className="flex flex-wrap items-center justify-center md:justify-between gap-y-4 gap-x-6 border-b-2 pb-6 border-gray-200 border-dashed">
+        <div className="flex flex-wrap items-center justify-center lg:justify-between gap-y-4 gap-x-2">
           <Button
             icon={<FaArrowLeftLong />}
             onClick={() =>

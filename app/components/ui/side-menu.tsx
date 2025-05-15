@@ -86,7 +86,7 @@ export default function SideMenu({
         )}
       </div>
       <div>
-        <LastUpdatedProduct />
+        <LastUpdatedProduct onClose={onClose} />
         <UserSection />
       </div>
     </div>

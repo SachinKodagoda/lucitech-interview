@@ -37,7 +37,7 @@ export const getProductListColumn = () => {
           onKeyDown={() => {}}
           onClick={() => {
             navigate(
-              `?${groupId}&page_size=${pagination.page_size}&page=${pagination.page}&sort_by=id&asc=${!isAscending}`
+              `?${groupId}&page_size=${pagination.page_size}&page=1&sort_by=id&asc=${!isAscending}`
             );
           }}
         >
@@ -58,7 +58,7 @@ export const getProductListColumn = () => {
           onKeyDown={() => {}}
           onClick={() => {
             navigate(
-              `?${groupId}&page_size=${pagination.page_size}&page=${pagination.page}&sort_by=name&asc=${!isAscending}`
+              `?${groupId}&page_size=${pagination.page_size}&page=1&sort_by=name&asc=${!isAscending}`
             );
           }}
         >

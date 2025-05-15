@@ -3,7 +3,11 @@ import { clearLastUpdated } from "@/stores/slices/product-slice";
 import { renderValue } from "@/utils/render-attributes";
 import { MdEdit } from "react-icons/md";
 import { useNavigate } from "react-router";
-export default function LastUpdatedProduct() {
+
+interface props {
+  onClose?: () => void;
+}
+export default function LastUpdatedProduct({ onClose }: props) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { lastModifiedProduct: product } = useAppSelector(
@@ -15,6 +19,9 @@ export default function LastUpdatedProduct() {
   }
 
   const onProductClick = () => {
+    if (onClose) {
+      onClose();
+    }
     navigate(`/dashboard/products/${product.id}`);
     dispatch(clearLastUpdated());
   };

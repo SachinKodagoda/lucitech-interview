@@ -28,8 +28,8 @@ const ProductList = () => {
   return (
     <>
       <div className="p-4 md:p-6 border-2 border-[rgba(0,0,0,0.1)] rounded-md flex flex-col gap-6">
-        <div className=" flex flex-wrap items-center justify-between gap-x-2 gap-y-4">
-          <h3 className="text-[#013b8e] text-xl font-bold uppercase flex flex-wrap items-center gap-2">
+        <div className=" flex flex-wrap items-center justify-center lg:justify-between gap-x-2 gap-y-4">
+          <h3 className="text-[#013b8e] text-xl font-bold uppercase flex flex-wrap items-center justify-center gap-2">
             {categoryName}
             {categoryName === "All Products" && (
               <Button type="primary" onClick={() => setIsModalOpen(true)}>

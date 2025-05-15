@@ -87,7 +87,7 @@ export default function EditProduct({
 
   return (
     <div className="flex items-center justify-center w-full py-4 flex-col gap-[50px]">
-      <div className="flex flex-wrap items-end gap-2">
+      <div className="flex flex-wrap items-end gap-2 justify-center">
         <div className="flex flex-col gap-1">
           <span className="text-sm text-gray-400">New Attribute:</span>
           <Button
