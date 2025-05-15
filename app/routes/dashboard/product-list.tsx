@@ -4,7 +4,7 @@ import PerPageItems from "@/widgets/per-page-items";
 import { useProductListActions } from "@/hooks/use-product-list-actions";
 import { getProductListColumn } from "@/utils/get-product-list-column";
 import AddProduct from "@/ui/add-product";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 const ProductList = () => {
   const {

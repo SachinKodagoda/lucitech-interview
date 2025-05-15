@@ -17,7 +17,6 @@ import { FaCartShopping, FaLink } from "react-icons/fa6";
 import { IoColorFilter } from "react-icons/io5";
 import { useParams } from "@/hooks/use-params-data";
 import type { sortOrder as sortOrderType } from "@/types";
-import { useMemo } from "react";
 
 export const getProductListColumn = () => {
   const navigate = useNavigate();

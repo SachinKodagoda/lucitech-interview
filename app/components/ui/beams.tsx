@@ -1,5 +1,4 @@
 "use client";
-// optimized
 
 import { useMemo } from "react";
 import BeamElement from "@/elements/beam-element";

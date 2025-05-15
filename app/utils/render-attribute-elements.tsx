@@ -1,8 +1,8 @@
-import { Checkbox, Form, Input, InputNumber, Select } from "antd";
+import { Form, Input, InputNumber, Select } from "antd";
 import type { Attributes } from "@/types";
 import { FaLink } from "react-icons/fa6";
 import { MdCategory } from "react-icons/md";
-import { IoCloseCircle, IoColorFilter } from "react-icons/io5";
+import { IoColorFilter } from "react-icons/io5";
 import { IoIosPricetags, IoMdCloseCircleOutline } from "react-icons/io";
 import { RiNumbersFill } from "react-icons/ri";
 

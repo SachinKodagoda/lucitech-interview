@@ -1,6 +1,5 @@
 import { Checkbox, Form, Input, InputNumber, Select } from "antd";
 import type { Attributes } from "@/types";
-import { BiSolidRename } from "react-icons/bi";
 import { FaLink } from "react-icons/fa6";
 import { MdCategory } from "react-icons/md";
 import { IoColorFilter } from "react-icons/io5";

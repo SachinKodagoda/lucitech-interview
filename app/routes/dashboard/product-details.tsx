@@ -8,7 +8,6 @@ import { renderValue } from "@/utils/render-attribute-text";
 
 import ProductNotFound from "@/ui/product-not-found";
 import Loading from "@/ui/loading";
-import { getDescriptionIcon } from "@/utils/get-description-icon";
 import { MdOutlineNumbers } from "react-icons/md";
 import { BiSolidCategory, BiSolidRename } from "react-icons/bi";
 import { getCategory } from "@/utils/get-category-name";
