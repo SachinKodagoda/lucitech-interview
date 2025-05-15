@@ -124,9 +124,9 @@ pass: lucytech@123
 
 ## 👉 Some Screenshots
 
-![full-data](https://github.com/user-attachments/assets/aa833375-41f9-4373-9eae-a812fd754feb)
+![new-login](https://github.com/user-attachments/assets/bb7d0f3a-03f2-44fc-8f9d-aa6af20211e9)
 
-![allproduct](https://github.com/user-attachments/assets/a1feeb5b-e48b-48c9-972d-5719a0810c9b)
+![full-data](https://github.com/user-attachments/assets/d3b90232-1a3c-444c-8dee-33505ea8a154)
 
 ![view lastupdate](https://github.com/user-attachments/assets/5bf3e468-37af-4355-8267-7f731e08e22e)
 
