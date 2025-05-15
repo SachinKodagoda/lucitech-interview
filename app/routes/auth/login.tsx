@@ -56,7 +56,7 @@ const Login = () => {
 
       <Beams />
 
-      <div className="p-10 rounded-md bg-white border-blue-950/60 z-50 shadow-md border-2 relative min-w-[310px]">
+      <div className="p-10 rounded-md bg-white border-blue-950/60 z-50 shadow-md border-2 relative min-w-[310px] md:min-w-[400px]">
         <div className="inset-2 border border-dashed absolute border-gray-600/50 rounded-md" />
         <div className="ribbon bg-cyan-700 text-white">Home24 BXP</div>
         <Form
