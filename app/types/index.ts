@@ -24,10 +24,13 @@ export type attributeCodes =
 export type attributeTypes = "number" | "text" | "url" | "tags" | "boolean";
 
 export interface Attributes {
-  code: attributeCodes;
+  code: attributeCodes | string;
   value: attributeValues;
   type: attributeTypes;
+  label?: string;
 }
+
+export type SetAttribute = React.Dispatch<React.SetStateAction<Attributes[]>>;
 
 export interface Product {
   id: string;
@@ -35,6 +38,8 @@ export interface Product {
   category_id: number;
   category_group: string;
   attributes: Attributes[];
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  [key: string]: any; // Allow additional properties
 }
 
 // Extended interfaces for the application

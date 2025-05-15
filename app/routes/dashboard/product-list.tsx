@@ -1,10 +1,10 @@
-import { Table, Spin, Button, Modal } from "antd";
+import { Table, Spin, Button } from "antd";
 import { setSortField, setSortOrder } from "@/stores/slices/product-slice";
 import PerPageItems from "@/widgets/per-page-items";
 import { useProductListActions } from "@/hooks/use-product-list-actions";
 import { getProductListColumn } from "@/utils/get-product-list-column";
 import AddProduct from "@/ui/add-product";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const ProductList = () => {
   const {

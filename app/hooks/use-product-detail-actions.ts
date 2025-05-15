@@ -2,13 +2,12 @@ import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { useEffect, useState } from "react";
 import { App, Form } from "antd";
-import type { attributeValues, Product } from "@/types";
+import type { Attributes, attributeValues, Product } from "@/types";
 import {
   clearCurrentProduct,
   fetchProductById,
   updateProductAttributes,
 } from "@/stores/slices/product-slice";
-import { getAllAttributes } from "@/utils/all-product-attrubutes";
 
 export const useProductDetailActions = () => {
   const { categories } = useAppSelector((state) => state.categories);
@@ -17,10 +16,14 @@ export const useProductDetailActions = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const [baseAttributes, setBaseAttributes] = useState<Attributes[]>([]);
 
   const { currentProduct, productLoading, pagination } = useAppSelector(
     (state) => state.products
   );
+
+  // biome-ignore lint/suspicious/noConsole: <explanation>
+  console.log("currentProduct: =-->", currentProduct);
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -37,10 +40,13 @@ export const useProductDetailActions = () => {
   useEffect(() => {
     if (currentProduct && isEditing) {
       const initialValues: Record<string, attributeValues> = {};
-      for (const attr of getAllAttributes()) {
-        initialValues[attr.code] =
-          currentProduct.attributes.find((a) => a.code === attr.code)?.value ||
-          attr.value;
+      setBaseAttributes(currentProduct.attributes);
+      for (const attr of currentProduct.attributes) {
+        if (attr.type === "boolean") {
+          initialValues[attr.code] = !!attr.value;
+        } else {
+          initialValues[attr.code] = attr.value;
+        }
       }
       initialValues.category_id = currentProduct.category_id || "";
       initialValues.name = currentProduct.name || "";
@@ -51,9 +57,10 @@ export const useProductDetailActions = () => {
   const handleSave = async () => {
     try {
       const values = await form.validateFields();
-      const updatedAttributes = getAllAttributes().map((attr) => ({
+      const updatedAttributes = baseAttributes.map((attr) => ({
         ...attr,
         value: values[attr.code],
+        label: attr.label || "",
       }));
       const filter = categories.find(
         (category) => category.id === values.category_id
@@ -85,5 +92,7 @@ export const useProductDetailActions = () => {
     isEditing,
     form,
     handleSave,
+    baseAttributes,
+    setBaseAttributes,
   };
 };

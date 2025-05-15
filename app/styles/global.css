@@ -84,4 +84,11 @@
     -ms-transform-origin: 0% 100%;
     transform-origin: 0% 100%;
   }
+
+  .longer-label label {
+    width: 100% !important;
+    display: flex;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 }

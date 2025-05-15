@@ -3,7 +3,7 @@ import type { Product } from "@/types";
 
 export default function getFilteredTags(products: Product[]) {
   const filteredTags = useMemo(() => {
-    const tags = products.flatMap((product) => product.attributes);
+    const tags = (products || []).flatMap((product) => product.attributes);
     const flattenedTags = tags
       .filter(
         (tag) =>
