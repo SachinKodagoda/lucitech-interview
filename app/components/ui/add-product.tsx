@@ -42,6 +42,7 @@ export default function AddProduct({ isModalOpen, onCloseModal }: Props) {
                 code: item.code,
                 value: values[item.code],
                 type: item.type,
+                label: item.label,
               };
             }),
           })

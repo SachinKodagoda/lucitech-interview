@@ -61,8 +61,6 @@ export const updateProductAttributes = createAsyncThunk(
   async (product: Product, { rejectWithValue }) => {
     try {
       return await updateProduct(product);
-      // const response = await updateProduct(product);
-      // return response;
     } catch {
       return rejectWithValue(
         "Failed to update product. Please try again later."
@@ -173,7 +171,6 @@ const productsSlice = createSlice({
           state.productLoading = false;
           state.currentProduct = action.payload;
           state.lastModifiedProduct = action.payload;
-
           // Update product in the list if it exists
           const index = state.products.findIndex(
             (p) => p.id === action.payload.id

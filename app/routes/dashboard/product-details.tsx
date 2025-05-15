@@ -4,7 +4,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoSaveOutline } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 import { useProductDetailActions } from "@/hooks/use-product-detail-actions";
-import { renderValue } from "@/utils/render-attributes";
+import { renderValue } from "@/utils/render-attribute-text";
 
 import ProductNotFound from "@/ui/product-not-found";
 import Loading from "@/ui/loading";
@@ -14,6 +14,7 @@ import { BiSolidCategory, BiSolidRename } from "react-icons/bi";
 import { getCategory } from "@/utils/get-category-name";
 import { useAppSelector } from "@/hooks/index";
 import EditProduct from "@/ui/edit-product";
+import { getDescriptionLabel } from "@/utils/get-description-label";
 
 const { Text } = Typography;
 
@@ -27,6 +28,8 @@ const ProductDetail = () => {
     isEditing,
     form,
     handleSave,
+    baseAttributes,
+    setBaseAttributes,
   } = useProductDetailActions();
   const { categories } = useAppSelector((state) => state.categories);
 
@@ -40,7 +43,7 @@ const ProductDetail = () => {
 
   return (
     <div className="p-4 md:p-6 border-2 border-[rgba(0,0,0,0.1)] rounded-md flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-y-4 gap-x-2">
+      <div className="flex flex-wrap items-center justify-between gap-y-4 gap-x-2 border-b-2 pb-6 border-gray-200 border-dashed">
         <div className="flex flex-wrap items-center justify-between gap-y-4 gap-x-2">
           <Button
             icon={<FaArrowLeftLong />}
@@ -76,7 +79,12 @@ const ProductDetail = () => {
         </div>
       </div>
       {isEditing ? (
-        <EditProduct form={form} currentProduct={currentProduct} />
+        <EditProduct
+          form={form}
+          currentProduct={currentProduct}
+          baseAttributes={baseAttributes}
+          setBaseAttributes={setBaseAttributes}
+        />
       ) : (
         <Descriptions bordered column={1}>
           <Descriptions.Item
@@ -115,7 +123,7 @@ const ProductDetail = () => {
           {currentProduct.attributes.map((attribute, index) => (
             <Descriptions.Item
               key={`description-${index + 1}`}
-              label={getDescriptionIcon(attribute.code)}
+              label={getDescriptionLabel(attribute.label || attribute.code)}
             >
               {renderValue(attribute)}
               <div>

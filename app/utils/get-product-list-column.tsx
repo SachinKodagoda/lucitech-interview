@@ -17,6 +17,7 @@ import { FaCartShopping, FaLink } from "react-icons/fa6";
 import { IoColorFilter } from "react-icons/io5";
 import { useParams } from "@/hooks/use-params-data";
 import type { sortOrder as sortOrderType } from "@/types";
+import { useMemo } from "react";
 
 export const getProductListColumn = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export const getProductListColumn = () => {
   const cateGroupId = categoryId ? `&category_id=${categoryId}` : "";
   const cateGroup = categoryGroup ? `&category_group=${categoryGroup}` : "";
   const groupId = cateGroupId || cateGroup;
+
   const columns = [
     {
       title: (
@@ -49,24 +51,6 @@ export const getProductListColumn = () => {
       sorter: true,
       sortOrder: sortField === "id" ? sortOrder : undefined,
       width: 80,
-    },
-    {
-      title: (
-        <div className="flex items-center gap-1">
-          <MdAddReaction />
-          Actions
-        </div>
-      ),
-      key: "actions",
-      render: (_: string, record: Product) => (
-        <Button
-          type="primary"
-          icon={<FaRegEye />}
-          onClick={() => navigate(`/dashboard/products/${record.id}`)}
-        >
-          View
-        </Button>
-      ),
     },
     {
       title: (
@@ -163,6 +147,24 @@ export const getProductListColumn = () => {
           </div>
         );
       },
+    },
+    {
+      title: (
+        <div className="flex items-center gap-1">
+          <MdAddReaction />
+          Actions
+        </div>
+      ),
+      key: "actions",
+      render: (_: string, record: Product) => (
+        <Button
+          type="primary"
+          icon={<FaRegEye />}
+          onClick={() => navigate(`/dashboard/products/${record.id}`)}
+        >
+          View
+        </Button>
+      ),
     },
   ];
 
