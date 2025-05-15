@@ -130,6 +130,6 @@ pass: lucytech@123
 
 ![view lastupdate](https://github.com/user-attachments/assets/5bf3e468-37af-4355-8267-7f731e08e22e)
 
-![new-edit](https://github.com/user-attachments/assets/12c3ef1e-2837-4a6d-8cf1-254773bdf0a5)
+![final edit](https://github.com/user-attachments/assets/7528d92c-2653-4dad-b6b1-652d42fcaf83)
 
 ![new-add](https://github.com/user-attachments/assets/d6d9d44c-17f8-468f-9f12-3738dd2b77b2)
