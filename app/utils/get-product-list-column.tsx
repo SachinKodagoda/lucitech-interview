@@ -25,9 +25,23 @@ export const getProductListColumn = (attributeList: Attributes[]) => {
 
   const OtherColumns = useMemo(() => {
     return attributeList.map((listItem) => ({
-      title: <div>{listItem.label}</div>,
+      title: (
+        <div
+          className="flex items-center gap-1"
+          onKeyDown={() => {}}
+          onClick={() => {
+            navigate(
+              `?${groupId}&page_size=${pagination.page_size}&page=1&sort_by=${listItem.code}&asc=${!isAscending}`
+            );
+          }}
+        >
+          {listItem.label}
+        </div>
+      ),
       dataIndex: listItem.code,
       key: listItem.code,
+      sorter: true,
+      sortOrder: sortField === listItem.code ? sortOrder : undefined,
       render: (_: string, record: Product) => {
         const filtered = renderAttribute(record, listItem.code);
         if (listItem.code === "in_stock") {
@@ -54,7 +68,15 @@ export const getProductListColumn = (attributeList: Attributes[]) => {
         );
       },
     }));
-  }, [attributeList]);
+  }, [
+    attributeList,
+    sortField,
+    sortOrder,
+    isAscending,
+    pagination.page_size,
+    navigate,
+    groupId,
+  ]);
 
   const columns = [
     {
