@@ -1,24 +1,18 @@
-import type { Product } from "@/types";
-import {
-  renderAttributeValue,
-  renderAttribute,
-  renderValue,
-} from "@/utils/render-attributes";
+import type { Attributes, Product } from "@/types";
+import { renderAttribute, renderValue } from "@/utils/render-attributes";
 import { cn } from "@/utils/cn";
 import { FaRegEye } from "react-icons/fa";
 import { Button } from "antd";
 import { useNavigate } from "react-router";
 import { pills } from "@/elements/pills";
 import { useAppSelector } from "@/hooks";
-import { RiNumbersFill } from "react-icons/ri";
-import { IoIosPricetags } from "react-icons/io";
-import { MdAddReaction, MdCategory, MdOutlineNumbers } from "react-icons/md";
-import { FaCartShopping, FaLink } from "react-icons/fa6";
-import { IoColorFilter } from "react-icons/io5";
+import { MdAddReaction, MdOutlineNumbers } from "react-icons/md";
+import { FaCartShopping } from "react-icons/fa6";
 import { useParams } from "@/hooks/use-params-data";
 import type { sortOrder as sortOrderType } from "@/types";
+import { useMemo } from "react";
 
-export const getProductListColumn = () => {
+export const getProductListColumn = (attributeList: Attributes[]) => {
   const navigate = useNavigate();
   const { sort_by, asc, categoryId, categoryGroup } = useParams();
   const { pagination } = useAppSelector((state) => state.products);
@@ -28,6 +22,39 @@ export const getProductListColumn = () => {
   const cateGroupId = categoryId ? `&category_id=${categoryId}` : "";
   const cateGroup = categoryGroup ? `&category_group=${categoryGroup}` : "";
   const groupId = cateGroupId || cateGroup;
+
+  const OtherColumns = useMemo(() => {
+    return attributeList.map((listItem) => ({
+      title: <div>{listItem.label}</div>,
+      dataIndex: listItem.code,
+      key: listItem.code,
+      render: (_: string, record: Product) => {
+        const filtered = renderAttribute(record, listItem.code);
+        if (listItem.code === "in_stock") {
+          return (
+            <div
+              className={cn(
+                filtered?.value ? pills() : pills({ intent: "red" }),
+                "min-w-16"
+              )}
+            >
+              {renderValue(filtered)}
+            </div>
+          );
+        }
+        return (
+          <div
+            className={cn(
+              "flex flex-wrap gap-2",
+              listItem.type === "tags" && "max-w-[100px]"
+            )}
+          >
+            {renderValue(filtered)}
+          </div>
+        );
+      },
+    }));
+  }, [attributeList]);
 
   const columns = [
     {
@@ -71,82 +98,7 @@ export const getProductListColumn = () => {
       sorter: true,
       sortOrder: sortField === "name" ? sortOrder : undefined,
     },
-    {
-      title: (
-        <div className="flex items-center gap-1">
-          <IoIosPricetags />
-          Price
-        </div>
-      ),
-      key: "price",
-      render: (_: string, record: Product) =>
-        renderAttributeValue(record, "price"),
-    },
-    {
-      title: (
-        <div className="flex items-center gap-1">
-          <RiNumbersFill />
-          In Stock
-        </div>
-      ),
-      key: "in_stock",
-      render: (_: string, record: Product) => {
-        const filtered = renderAttribute(record, "in_stock");
-        return (
-          <div
-            className={cn(
-              filtered?.value ? pills() : pills({ intent: "red" }),
-              "min-w-16"
-            )}
-          >
-            {renderValue(filtered)}
-          </div>
-        );
-      },
-    },
-    {
-      title: (
-        <div className="flex items-center gap-1">
-          <IoColorFilter />
-          Color
-        </div>
-      ),
-      key: "color",
-      render: (_: string, record: Product) => {
-        const filtered = renderAttribute(record, "color");
-        return <div>{renderValue(filtered)}</div>;
-      },
-    },
-    {
-      title: (
-        <div className="flex items-center gap-1">
-          <FaLink />
-          URL
-        </div>
-      ),
-      key: "specs_url",
-      render: (_: string, record: Product) => {
-        const filtered = renderAttribute(record, "specs_url");
-        return <div>{renderValue(filtered)}</div>;
-      },
-    },
-    {
-      title: (
-        <div className="flex items-center gap-1">
-          <MdCategory />
-          Tags
-        </div>
-      ),
-      key: "tags",
-      render: (_: string, record: Product) => {
-        const filtered = renderAttribute(record, "tags");
-        return (
-          <div className="flex flex-wrap max-w-[100px] gap-2">
-            {renderValue(filtered)}
-          </div>
-        );
-      },
-    },
+    ...OtherColumns,
     {
       title: (
         <div className="flex items-center gap-1">
