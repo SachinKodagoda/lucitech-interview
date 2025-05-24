@@ -1,5 +1,5 @@
 import type { Attributes, Product } from "@/types";
-import { renderAttribute, renderValue } from "@/utils/render-attributes";
+import { renderAttribute, renderValue } from "@/utils/render-attribute-text";
 import { cn } from "@/utils/cn";
 import { FaRegEye } from "react-icons/fa";
 import { Button } from "antd";

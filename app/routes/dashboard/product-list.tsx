@@ -5,7 +5,7 @@ import { useProductListActions } from "@/hooks/use-product-list-actions";
 import { getProductListColumn } from "@/utils/get-product-list-column";
 import AddProduct from "@/ui/add-product";
 import { useMemo, useState } from "react";
-import type { Attributes, attributeValues } from "@/types/index";
+import type { Attributes } from "@/types/index";
 
 const ProductList = () => {
   const {
@@ -21,7 +21,9 @@ const ProductList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const allAttributes = useMemo(() => {
-    const attributes = products.flatMap((product) => product.attributes);
+    const attributes = (products || []).flatMap(
+      (product) => product.attributes
+    );
 
     const reducedItems = attributes.reduce(
       (acc, item) => {
@@ -40,7 +42,7 @@ const ProductList = () => {
   };
 
   const updatedProduct = useMemo(() => {
-    const newProducts = products.map((product) => {
+    const newProducts = (products || []).map((product) => {
       const { attributes } = product;
       const flatAttributes = attributes.reduce(
         (acc, attr) => {

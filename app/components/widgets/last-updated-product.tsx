@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/index";
 import { clearLastUpdated } from "@/stores/slices/product-slice";
-import { renderValue } from "@/utils/render-attributes";
+import { renderValue } from "@/utils/render-attribute-text";
 import { MdEdit } from "react-icons/md";
 import { useNavigate } from "react-router";
 
