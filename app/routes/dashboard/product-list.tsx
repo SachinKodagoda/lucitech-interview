@@ -4,7 +4,8 @@ import PerPageItems from "@/widgets/per-page-items";
 import { useProductListActions } from "@/hooks/use-product-list-actions";
 import { getProductListColumn } from "@/utils/get-product-list-column";
 import AddProduct from "@/ui/add-product";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import type { Attributes } from "@/types/index";
 
 const ProductList = () => {
   const {
@@ -19,11 +20,44 @@ const ProductList = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const columns = getProductListColumn();
+  const allAttributes = useMemo(() => {
+    const attributes = (products || []).flatMap(
+      (product) => product.attributes
+    );
+
+    const reducedItems = attributes.reduce(
+      (acc, item) => {
+        acc[item.code] = item;
+        return acc;
+      },
+      {} as Record<string, Attributes>
+    );
+    return Array.from(Object.values(reducedItems));
+  }, [products]);
+
+  const columns = getProductListColumn(allAttributes);
 
   const onCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  const updatedProduct = useMemo(() => {
+    const newProducts = (products || []).map((product) => {
+      const { attributes } = product;
+      const flatAttributes = attributes.reduce(
+        (acc, attr) => {
+          acc[attr.code] = attr.value as string;
+          return acc;
+        },
+        {} as Record<string, string | number | boolean | null | string[]>
+      );
+      return {
+        ...product,
+        ...flatAttributes,
+      };
+    });
+    return newProducts;
+  }, [products]);
 
   return (
     <>
@@ -45,7 +79,7 @@ const ProductList = () => {
           </div>
         ) : (
           <Table
-            dataSource={products}
+            dataSource={updatedProduct}
             columns={columns}
             rowKey="id"
             scroll={{ x: "max-content" }}

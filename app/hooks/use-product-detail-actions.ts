@@ -22,9 +22,6 @@ export const useProductDetailActions = () => {
     (state) => state.products
   );
 
-  // biome-ignore lint/suspicious/noConsole: <explanation>
-  console.log("currentProduct: =-->", currentProduct);
-
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
